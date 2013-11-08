@@ -36,8 +36,8 @@ import net.minecraft.world.World;
 
 public class EntityZiggs extends EntityMob implements IRangedAttackMob {
 
-	private int timer;
-	public boolean hasBomb;
+	public static int timer;
+	public static boolean hasBomb;
 
 	public EntityZiggs(World par1World) {
 		super(par1World);
@@ -88,21 +88,10 @@ public class EntityZiggs extends EntityMob implements IRangedAttackMob {
 	}
 
 	public void onLivingUpdate() {
-		if (timer >= 50)
-			this.hasBomb = false;
-		else if (timer <= 49)
-			this.hasBomb = true;
-		if (!this.worldObj.isRemote) {
+		if (!this.worldObj.isRemote && this.timer > 0) {
 			timer--;
-			if (this.timer-- <= 0) {
-				ItemStack itemstack = this.getHeldItem();
-				this.setCurrentItemOrArmor(0, (ItemStack) null);
-
-			}
-		} else {
-
-			this.setCurrentItemOrArmor(0, new ItemStack(LeagueofCrafters.dart, 1));
-			// this.timer = 100;
+		} else if (this.timer < 0) {
+			this.timer = 0;
 		}
 
 		if (this.rand.nextFloat() < 7.5E-4F) {

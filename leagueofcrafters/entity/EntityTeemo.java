@@ -32,6 +32,7 @@ import net.minecraft.world.World;
 public class EntityTeemo extends EntityMob implements IRangedAttackMob {
 
 	private int timer;
+	int InvisibleCounter = 0;
 
 	public EntityTeemo(World par1World) {
 		super(par1World);
@@ -78,14 +79,30 @@ public class EntityTeemo extends EntityMob implements IRangedAttackMob {
 			return;
 	}
 
-	@Override
-	protected int getDropItemId() {
-		return LeagueofCrafters.dart.itemID;
+	// @Override
+	// protected int getDropItemId() {
+	// return LeagueofCrafters.dart.itemID;
+	// }
+	protected void dropRareDrop(int par1) {
+		switch (this.rand.nextInt(2)) {
+		case 1:
+			this.dropItem(LeagueofCrafters.dart.itemID, 2);
+		}
 	}
 
 	public void onLivingUpdate() {
 		if (!this.worldObj.isRemote) {
 			timer--;
+			// if (this.getPo == t && this.lastTickPosZ == this.newPosZ) {
+			// InvisibleCounter++;
+			// }else{
+			// this.setInvisible(false);
+			// InvisibleCounter = 0;
+			// }
+			// if(this.InvisibleCounter >= 100){
+			// if(!this.isInvisible())
+			// this.setInvisible(true);
+			// }
 		}
 		super.onLivingUpdate();
 

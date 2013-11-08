@@ -28,6 +28,7 @@ public class LeagueofCrafters {
 
 	public static ItemDart dart;
 	public static ItemBomb bomb;
+	public static ItemCannon cannon;
 
 	@Instance(value = "LoC")
 	public static LeagueofCrafters instance;
@@ -48,6 +49,10 @@ public class LeagueofCrafters {
 		EntityRegistry.registerModEntity(EntityBomb.class, "Bomb", 1003, this, 80, 1, true);
 		bomb = (ItemBomb) new ItemBomb(5000).setMaxStackSize(64).setUnlocalizedName("Bomb").setCreativeTab(CreativeTabs.tabCombat);
 		LanguageRegistry.addName(bomb, "Bomb");
+		
+		cannon = (ItemCannon) new ItemCannon(5002).setMaxStackSize(1).setUnlocalizedName("Cannon").setCreativeTab(CreativeTabs.tabCombat);
+		LanguageRegistry.addName(cannon, "Cannon");
+
 
 		EntityRegistry.registerGlobalEntityID(EntityTeemo.class, "Teemo", EntityRegistry.findGlobalUniqueEntityId(), 0 * 65536 + 255 * 256 + 0, (255 * 65536)
 				+ (0 * 256) + 255);

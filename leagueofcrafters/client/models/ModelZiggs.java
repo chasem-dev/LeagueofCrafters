@@ -28,6 +28,7 @@ public class ModelZiggs extends ModelBase {
 	ModelRenderer Shape11;
 	ModelRenderer Shape12;
 	ModelRenderer FullHead;
+	ModelRenderer Bomb;
 
 	public ModelZiggs() {
 		textureWidth = 256;
@@ -100,6 +101,10 @@ public class ModelZiggs extends ModelBase {
 		Shape5.setTextureSize(256, 128);
 		Shape5.mirror = true;
 		setRotation(Shape5, 0F, 0F, 0F);
+
+		Bomb = new ModelRenderer(this, "Bomb");
+		Bomb.setRotationPoint(0, 0, 0);
+
 		Shape6 = new ModelRenderer(this, 39, 0);
 		Shape6.addBox(0F, 0F, 0F, 6, 6, 3);
 		Shape6.setRotationPoint(-3.5F, 10F, 1F);
@@ -142,6 +147,13 @@ public class ModelZiggs extends ModelBase {
 		Shape12.setTextureSize(256, 128);
 		Shape12.mirror = true;
 		setRotation(Shape12, 0F, 0F, 0F);
+		Bomb.addChild(Shape6);
+		Bomb.addChild(Shape7);
+		Bomb.addChild(Shape8);
+		Bomb.addChild(Shape9);
+		Bomb.addChild(Shape10);
+		Bomb.addChild(Shape11);
+		Bomb.addChild(Shape12);
 
 		FullHead = new ModelRenderer(this, "Fullhead");
 		FullHead.setRotationPoint(0, 0, 0);
@@ -154,8 +166,13 @@ public class ModelZiggs extends ModelBase {
 
 	}
 
-	public void render(EntityZiggs entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
+		this.doRenderZiggs((EntityZiggs) entity, f, f1, f2, f3, f4, f5);
+
+	}
+
+	private void doRenderZiggs(EntityZiggs entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		rightleg.render(f5);
 		leftleg.render(f5);
@@ -163,14 +180,8 @@ public class ModelZiggs extends ModelBase {
 		right_arm.render(f5);
 		left_arm.render(f5);
 		FullHead.render(f5);
-		Shape6.render(f5);
-		Shape7.render(f5);
-		Shape8.render(f5);
-		Shape9.render(f5);
-		Shape10.render(f5);
-		Shape11.render(f5);
-		Shape12.render(f5);
-
+		if (entity.timer <= 35)
+			Bomb.render(f5);
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {

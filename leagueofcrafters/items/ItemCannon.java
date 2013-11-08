@@ -17,9 +17,7 @@ public class ItemCannon extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
-		// par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX,
-		// par3EntityPlayer.posY, par3EntityPlayer.posZ, par8, par9)
-		EntityBomb bomb = new EntityBomb(par2World, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ);
+		EntityBomb bomb = new EntityBomb(par2World, par3EntityPlayer.posX + 1, par3EntityPlayer.posY = 2, par3EntityPlayer.posZ + 1);
 		par2World.spawnEntityInWorld(bomb);
 		return par1ItemStack;
 	}

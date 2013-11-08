@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class RenderZiggs extends RenderLiving {
 
-	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/Ziggs.png"); // refers
+	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/ziggs.png"); // refers
 	protected ModelZiggs model;
 
 	public RenderZiggs(ModelZiggs par1ModelBase, float par2) {
