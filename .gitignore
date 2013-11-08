@@ -11,18 +11,13 @@
 # Other files #
 *.properties
 *.png
-minecraft/Start.java
+/Start.java
 
 # Directories #
-minecraftforge/
-common/cpw/
-common/net/
-common/org/
-minecraft_server/
-minecraft/ibxm/
-minecraft/net
-minecraft/paulscode/
-minecraft/cpw/
-/minecraft/assets
-/minecraft/deobfuscation_data-1.6.2.lzma
-/minecraft/deobfuscation_data-1.6.4.lzma
+/ibxm/
+/net
+/paulscode/
+/cpw/
+/assets
+/deobfuscation_data-1.6.2.lzma
+/deobfuscation_data-1.6.4.lzma
