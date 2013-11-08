@@ -1,0 +1,139 @@
+package leagueofcrafters.entity;
+
+import java.util.Iterator;
+import java.util.List;
+
+import leagueofcrafters.LeagueofCrafters;
+import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IRangedAttackMob;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIArrowAttack;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIFleeSun;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAIPanic;
+import net.minecraft.entity.ai.EntityAIRestrictSun;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.attributes.AttributeInstance;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPotion;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+
+public class EntityZiggs extends EntityMob implements IRangedAttackMob {
+
+	private int timer;
+	public boolean hasBomb;
+
+	public EntityZiggs(World par1World) {
+		super(par1World);
+		this.setSize(1, 1);
+		this.tasks.addTask(1, new EntityAISwimming(this));
+		this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 60, 10.0F));
+		this.tasks.addTask(2, new EntityAIWander(this, 1.0D));
+		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
+	}
+
+	@Override
+	protected boolean isValidLightLevel() {
+		return true;
+	}
+
+	@Override
+	protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.25D);
+	}
+
+	@Override
+	public boolean isAIEnabled() {
+		return true;
+	}
+
+	@Override
+	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2) {
+		if (timer <= 0) {
+			EntityBomb entityarrow = new EntityBomb(this.worldObj, this, par1EntityLivingBase, 1.6F, (float) (14 - this.worldObj.difficultySetting * 4));
+			// entityarrow.setVelocity(entityarrow.motionX, entityarrow.motionY,
+			// entityarrow.motionZ);
+			this.worldObj.spawnEntityInWorld(entityarrow);
+			timer = 300;
+		}
+	}
+
+	public void setAggressive(boolean par1) {
+		this.getDataWatcher().updateObject(21, Byte.valueOf((byte) (par1 ? 1 : 0)));
+	}
+
+	/**
+	 * Return whether this witch is aggressive at an entity.
+	 */
+	public boolean getAggressive() {
+		return this.getDataWatcher().getWatchableObjectByte(21) == 1;
+	}
+
+	public void onLivingUpdate() {
+		if (timer >= 50)
+			this.hasBomb = false;
+		else if (timer <= 49)
+			this.hasBomb = true;
+		if (!this.worldObj.isRemote) {
+			timer--;
+			if (this.timer-- <= 0) {
+				ItemStack itemstack = this.getHeldItem();
+				this.setCurrentItemOrArmor(0, (ItemStack) null);
+
+			}
+		} else {
+
+			this.setCurrentItemOrArmor(0, new ItemStack(LeagueofCrafters.dart, 1));
+			// this.timer = 100;
+		}
+
+		if (this.rand.nextFloat() < 7.5E-4F) {
+			this.worldObj.setEntityState(this, (byte) 15);
+		}
+
+		super.onLivingUpdate();
+	}
+
+	@Override
+	protected int getDropItemId() {
+		return LeagueofCrafters.bomb.itemID;
+	}
+
+	@Override
+	protected String getLivingSound() {
+		return "league:sound/ziggs.ogg";
+	}
+
+	@Override
+	protected String getHurtSound() {
+		return "league:ziggshurt";
+	}
+
+	@Override
+	protected String getDeathSound() {
+		return "league:ziggsdeath";
+	}
+
+	@Override
+	protected float getSoundVolume() {
+		return 0.4F;
+	}
+}
