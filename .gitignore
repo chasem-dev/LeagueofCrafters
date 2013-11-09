@@ -10,7 +10,7 @@
 
 # Other files #
 *.properties
-*.png
+forge_logo.png
 /Start.java
 
 # Directories #
@@ -18,6 +18,6 @@
 /net
 /paulscode/
 /cpw/
-/assets
+/assets/forge
 /deobfuscation_data-1.6.2.lzma
 /deobfuscation_data-1.6.4.lzma
