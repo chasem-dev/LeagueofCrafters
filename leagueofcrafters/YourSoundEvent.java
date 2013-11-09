@@ -7,5 +7,7 @@ public class YourSoundEvent {
 	@ForgeSubscribe
 	public void onSoundLoad(SoundLoadEvent event) {
 		event.manager.addSound("league:teemo.ogg");
+		event.manager.addSound("league:ziggs.ogg");
+
 	}
 }

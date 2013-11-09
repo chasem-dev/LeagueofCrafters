@@ -112,12 +112,12 @@ public class EntityZiggs extends EntityMob implements IRangedAttackMob {
 
 	@Override
 	protected String getHurtSound() {
-		return "league:ziggshurt";
+		return "league:ziggs.hurt";
 	}
 
 	@Override
 	protected String getDeathSound() {
-		return "league:ziggsdeath";
+		return "league:ziggs.death";
 	}
 
 	@Override
