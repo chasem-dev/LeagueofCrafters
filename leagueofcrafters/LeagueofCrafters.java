@@ -49,10 +49,9 @@ public class LeagueofCrafters {
 		EntityRegistry.registerModEntity(EntityBomb.class, "Bomb", 1003, this, 80, 1, true);
 		bomb = (ItemBomb) new ItemBomb(5000).setMaxStackSize(64).setUnlocalizedName("Bomb").setCreativeTab(CreativeTabs.tabCombat);
 		LanguageRegistry.addName(bomb, "Bomb");
-		
+
 		cannon = (ItemCannon) new ItemCannon(5002).setMaxStackSize(1).setUnlocalizedName("Cannon").setCreativeTab(CreativeTabs.tabCombat);
 		LanguageRegistry.addName(cannon, "Cannon");
-
 
 		EntityRegistry.registerGlobalEntityID(EntityTeemo.class, "Teemo", EntityRegistry.findGlobalUniqueEntityId(), 0 * 65536 + 255 * 256 + 0, (255 * 65536)
 				+ (0 * 256) + 255);
@@ -62,6 +61,10 @@ public class LeagueofCrafters {
 		EntityRegistry.registerGlobalEntityID(EntityZiggs.class, "Ziggs", EntityRegistry.findGlobalUniqueEntityId(), 100000, 19992);
 		EntityRegistry.registerModEntity(EntityZiggs.class, "Ziggs", 1002, this, 80, 1, true);
 		LanguageRegistry.instance().addStringLocalization("entity.Ziggs.name", "en_US", "Ziggs");
+
+		EntityRegistry.registerGlobalEntityID(EntityTwitch.class, "Twitch", EntityRegistry.findGlobalUniqueEntityId(), 134522, 13657);
+		EntityRegistry.registerModEntity(EntityTwitch.class, "Twitch", 1004, this, 80, 1, true);
+		LanguageRegistry.instance().addStringLocalization("entity.Twitch.name", "en_US", "Twitch");
 
 		proxy.registerRenderers();
 		proxy.registerSpawns();
