@@ -27,7 +27,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTeemo.class, new RenderTeemo(new ModelTeemo(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityZiggs.class, new RenderZiggs(new ModelZiggs(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDart.class, new RenderDart());
-		RenderingRegistry.registerEntityRenderingHandler(EntityBomb.class, new RenderBomb(new ModelTeemo(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityBomb.class, new RenderBomb(new ModelBomb(), 0.5F));
 
 	}
 

@@ -69,10 +69,9 @@ public class EntityZiggs extends EntityMob implements IRangedAttackMob {
 	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2) {
 		if (timer <= 0) {
 			EntityBomb entityarrow = new EntityBomb(this.worldObj, this, par1EntityLivingBase, 1.6F, (float) (14 - this.worldObj.difficultySetting * 4));
-			// entityarrow.setVelocity(entityarrow.motionX, entityarrow.motionY,
-			// entityarrow.motionZ);
+			entityarrow.setPosition(this.posX, this.posY, this.posZ);
 			this.worldObj.spawnEntityInWorld(entityarrow);
-			timer = 300;
+			timer = 100;
 		}
 	}
 
@@ -108,7 +107,7 @@ public class EntityZiggs extends EntityMob implements IRangedAttackMob {
 
 	@Override
 	protected String getLivingSound() {
-		return "league:sound/ziggs.ogg";
+		return "league:ziggs";
 	}
 
 	@Override

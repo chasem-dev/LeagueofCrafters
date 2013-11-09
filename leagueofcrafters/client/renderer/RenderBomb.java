@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import leagueofcrafters.entity.EntityBomb;
-import leagueofcrafters.client.models.ModelTeemo;
+import leagueofcrafters.client.models.ModelBomb;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelWitch;
 import net.minecraft.client.renderer.RenderHelper;
@@ -20,9 +20,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class RenderBomb extends RenderLiving {
 
 	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/teemo.png"); // refers
-	protected ModelTeemo model;
+	protected ModelBomb model;
 
-	public RenderBomb(ModelTeemo par1ModelBase, float par2) {
+	public RenderBomb(ModelBomb par1ModelBase, float par2) {
 		super(par1ModelBase, par2);
 		model = par1ModelBase;
 	}

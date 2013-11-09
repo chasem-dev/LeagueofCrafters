@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -48,10 +49,12 @@ public class EntityBomb extends EntityThrowable implements IProjectile {
 	public Entity shootingEntity;
 	private int ticksInGround;
 	private int ticksInAir;
-	private double damage = 2.0D;
+	private double damage = 2D;
 
 	/** The amount of knockback an Bomb applies when it hits a mob. */
 	private int knockbackStrength;
+	public float animationNum1;
+	public EntityPlayer entity;
 
 	public EntityBomb(World par1World) {
 		super(par1World);
@@ -298,11 +301,6 @@ public class EntityBomb extends EntityThrowable implements IProjectile {
 						if (movingobjectposition.entityHit instanceof EntityLivingBase) {
 							EntityLivingBase entitylivingbase = (EntityLivingBase) movingobjectposition.entityHit;
 
-							// if (!this.worldObj.isRemote) {
-							// entitylivingbase.setArrowCountInEntity(entitylivingbase.getArrowCountInEntity()
-							// + 1);
-							// }
-
 							if (this.shootingEntity != null) {
 								EnchantmentThorns.func_92096_a(this.shootingEntity, entitylivingbase, this.rand);
 							}
@@ -310,10 +308,13 @@ public class EntityBomb extends EntityThrowable implements IProjectile {
 							if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity
 									&& movingobjectposition.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP) {
 								((EntityPlayerMP) this.shootingEntity).playerNetServerHandler.sendPacketToPlayer(new Packet70GameEvent(6, 0));
+							} else if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity
+									&& movingobjectposition.entityHit instanceof EntityPlayer || movingobjectposition.entityHit instanceof EntityPlayerMP) {
+								this.worldObj.createExplosion(this, movingobjectposition.entityHit.posX, movingobjectposition.entityHit.posY + 1,
+										movingobjectposition.entityHit.posZ, .3F, true);
+
 							}
 						}
-
-						this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
 						if (!(movingobjectposition.entityHit instanceof EntityEnderman)) {
 							this.setDead();
@@ -339,7 +340,6 @@ public class EntityBomb extends EntityThrowable implements IProjectile {
 					this.posX -= this.motionX / (double) f2 * 0.05000000074505806D;
 					this.posY -= this.motionY / (double) f2 * 0.05000000074505806D;
 					this.posZ -= this.motionZ / (double) f2 * 0.05000000074505806D;
-					this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					this.inGround = true;
 					this.BombShake = 7;
 					this.setIsCritical(false);
@@ -350,11 +350,9 @@ public class EntityBomb extends EntityThrowable implements IProjectile {
 				}
 			}
 
-			if (this.getIsCritical()) {
-				for (l = 0; l < 4; ++l) {
-					this.worldObj.spawnParticle("crit", this.posX + this.motionX * (double) l / 4.0D, this.posY + this.motionY * (double) l / 4.0D, this.posZ
-							+ this.motionZ * (double) l / 4.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ);
-				}
+			for (l = 0; l < 4; ++l) {
+				this.worldObj.spawnParticle("largesmoke", this.posX + this.motionX * (double) l / 4.0D, this.posY + this.motionY * (double) l / 4.0D, this.posZ
+						+ this.motionZ * (double) l / 4.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ);
 			}
 
 			this.posX += this.motionX;
@@ -385,11 +383,8 @@ public class EntityBomb extends EntityThrowable implements IProjectile {
 			f1 = 0.05F;
 
 			if (this.isInWater()) {
-				for (int j1 = 0; j1 < 4; ++j1) {
-					f3 = 0.25F;
-					this.worldObj.spawnParticle("bubble", this.posX - this.motionX * (double) f3, this.posY - this.motionY * (double) f3, this.posZ
-							- this.motionZ * (double) f3, this.motionX, this.motionY, this.motionZ);
-				}
+				f3 = 0.25F;
+				this.setDead();
 
 				f4 = 0.8F;
 			}
@@ -450,29 +445,10 @@ public class EntityBomb extends EntityThrowable implements IProjectile {
 	 */
 	@Override
 	public void onCollideWithPlayer(EntityPlayer par1EntityPlayer) {
-		// boolean flag = this.canBePickedUp == 1 || this.canBePickedUp == 2
-		// && par1EntityPlayer.capabilities.isCreativeMode;
-
-		// par1EntityPlayer.inventory.addItemStackToInventory(new
-		// ItemStack(LeagueofCrafters.bomb, 1));
-		// ;
-		// {
-		// flag = false;
-		// }
-		//
-		// if (flag) {
-		// this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() -
-		// this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-		// par1EntityPlayer.onItemPickup(this, 1);
-		this.worldObj.createExplosion(this, this.posX, this.posY - 1, this.posZ, 0.75F, true);
-		this.setDead();
-		// }
-		// } else if (!this.inGround) {
-		// par1EntityPlayer.addPotionEffect(new PotionEffect(Potion.poison.id,
-		// 100, 0));
-		// par1EntityPlayer.addPotionEffect(new
-		// PotionEffect(Potion.blindness.id, 75, 1));
-		// }
+		entity = par1EntityPlayer;
+		// this.worldObj.createExplosion(this, par1EntityPlayer.posX,
+		// par1EntityPlayer.posY, par1EntityPlayer.posZ, .75F, true);
+		// this.setDead();
 	}
 
 	/**
@@ -489,7 +465,7 @@ public class EntityBomb extends EntityThrowable implements IProjectile {
 	}
 
 	public void setDamage(double par1) {
-		this.damage = par1;
+		// this.damage = par1;
 	}
 
 	public double getDamage() {
@@ -534,9 +510,12 @@ public class EntityBomb extends EntityThrowable implements IProjectile {
 	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
 		if (this.inGround) {
-			this.worldObj.createExplosion(this, this.posX, this.posY - 1, this.posZ, 0.75F, true);
+			this.worldObj.createExplosion(this, this.posX, this.posY + 0.5F, this.posZ, 0.75F, true);
 			this.setDead();
+			// } else if (this.entity != null) {
+			// this.worldObj.createExplosion(this, this.posX, this.posY + 0.5F,
+			// this.posZ, 0.75F, true);
+			// this.setDead();
 		}
-
 	}
 }
