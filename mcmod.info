@@ -1,0 +1,17 @@
+[
+{
+  "modid": "LoC",
+  "name": "LeagueofCrafters",
+  "description": "A mod adding League of Legends champions to Minecraft!",
+  "version": "0.1",
+  "mcversion": "1.6.4",
+  "logoFile": "",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Xwaffle"],
+  "credits": "",
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
