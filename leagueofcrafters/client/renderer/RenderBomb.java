@@ -19,7 +19,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class RenderBomb extends RenderLiving {
 
-	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/teemo.png"); // refers
+	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/bomb.png"); // refers
 	protected ModelBomb model;
 
 	public RenderBomb(ModelBomb par1ModelBase, float par2) {

@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class RenderTwitch extends RenderLiving {
 
-	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/Twitch.png"); // refers
+	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/ziggs.png"); // refers
 	protected ModelZiggs model;
 
 	public RenderTwitch(ModelZiggs par1ModelBase, float par2) {

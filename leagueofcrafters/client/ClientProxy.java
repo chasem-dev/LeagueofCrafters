@@ -2,7 +2,7 @@ package leagueofcrafters.client;
 
 import leagueofcrafters.CommonProxy;
 import leagueofcrafters.LeagueofCrafters;
-import leagueofcrafters.YourSoundEvent;
+import leagueofcrafters.SoundEvent;
 import leagueofcrafters.client.renderer.*;
 import leagueofcrafters.entity.*;
 import leagueofcrafters.items.ItemBomb;
@@ -28,13 +28,13 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityZiggs.class, new RenderZiggs(new ModelZiggs(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDart.class, new RenderDart());
 		RenderingRegistry.registerEntityRenderingHandler(EntityBomb.class, new RenderBomb(new ModelBomb(), 0.5F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityTwitch.class, new RenderTwitch(new ModelZiggs(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTwitch.class, new RenderTwitch(new ModelTeemo(), 0.5F));
 
 	}
 
 	@Override
 	public void registerSound() {
-		MinecraftForge.EVENT_BUS.register(new YourSoundEvent());
+		MinecraftForge.EVENT_BUS.register(new SoundEvent());
 	}
 
 	@Override

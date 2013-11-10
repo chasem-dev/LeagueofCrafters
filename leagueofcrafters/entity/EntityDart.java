@@ -179,7 +179,7 @@ public class EntityDart extends Entity implements IProjectile {
 	 */
 	public void onUpdate() {
 		super.onUpdate();
-		if(!this.isEntityAlive()){
+		if (!this.isEntityAlive()) {
 			this.setDead();
 		}
 		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
@@ -449,24 +449,17 @@ public class EntityDart extends Entity implements IProjectile {
 	 */
 	public void onCollideWithPlayer(EntityPlayer par1EntityPlayer) {
 		if (this.inGround && this.dartShake <= 0) {
-			// boolean flag = this.canBePickedUp == 1 || this.canBePickedUp == 2
-			// && par1EntityPlayer.capabilities.isCreativeMode;
-
 			par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(LeagueofCrafters.dart, 1));
-			// ;
-			// {
-			// flag = false;
-			// }
-			//
-			// if (flag) {
 			this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 			par1EntityPlayer.onItemPickup(this, 1);
 			this.setDead();
-			// }
-		} else if (!this.inGround) {
-			par1EntityPlayer.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 0));
-			par1EntityPlayer.addPotionEffect(new PotionEffect(Potion.blindness.id, 75, 1));
-		}
+		} else if (this.shootingEntity != null)
+			if (!this.inGround && par1EntityPlayer != this.shootingEntity) {
+				par1EntityPlayer.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 0));
+				par1EntityPlayer.addPotionEffect(new PotionEffect(Potion.blindness.id, 75, 1));
+			} else {
+				return;
+			}
 	}
 
 	/**

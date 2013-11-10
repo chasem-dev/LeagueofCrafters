@@ -37,6 +37,7 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 	/** List of items a Twitch should drop on death. */
 	private static final int[] TwitchDrops = new int[] { Item.glowstone.itemID, Item.sugar.itemID, Item.redstone.itemID, Item.spiderEye.itemID,
 			Item.glassBottle.itemID, Item.gunpowder.itemID, Item.stick.itemID, Item.stick.itemID };
+	private int timer;
 
 	/**
 	 * Timer used as interval for a Twitch's attack, decremented every tick if
@@ -143,7 +144,7 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 		if (this.rand.nextFloat() < 7.5E-4F) {
 			this.worldObj.setEntityState(this, (byte) 15);
 		}
-
+		timer--;
 		super.onLivingUpdate();
 	}
 
@@ -190,20 +191,23 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 	 * Attack the specified entity using a ranged attack.
 	 */
 	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2) {
-		EntityPotion entitypotion = new EntityPotion(this.worldObj, this, 32732);
-		entitypotion.rotationPitch -= -20.0F;
-		double d0 = par1EntityLivingBase.posX + par1EntityLivingBase.motionX - this.posX;
-		double d1 = par1EntityLivingBase.posY + (double) par1EntityLivingBase.getEyeHeight() - 1.100000023841858D - this.posY;
-		double d2 = par1EntityLivingBase.posZ + par1EntityLivingBase.motionZ - this.posZ;
-		float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+		if (timer <= 0) {
+			EntityPotion entitypotion = new EntityPotion(this.worldObj, this, 32732);
+			entitypotion.rotationPitch -= -20.0F;
+			double d0 = par1EntityLivingBase.posX + par1EntityLivingBase.motionX - this.posX;
+			double d1 = par1EntityLivingBase.posY + (double) par1EntityLivingBase.getEyeHeight() - 1.100000023841858D - this.posY;
+			double d2 = par1EntityLivingBase.posZ + par1EntityLivingBase.motionZ - this.posZ;
+			float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
 
-		if (f1 >= 8.0F && !par1EntityLivingBase.isPotionActive(Potion.moveSlowdown)) {
-			entitypotion.setPotionDamage(32698);
-		} else if (par1EntityLivingBase.getHealth() >= 8.0F && !par1EntityLivingBase.isPotionActive(Potion.poison)) {
-			entitypotion.setPotionDamage(32660);
+			if (f1 >= 8.0F && !par1EntityLivingBase.isPotionActive(Potion.moveSlowdown)) {
+				entitypotion.setPotionDamage(32698);
+			} else if (par1EntityLivingBase.getHealth() >= 8.0F && !par1EntityLivingBase.isPotionActive(Potion.poison)) {
+				entitypotion.setPotionDamage(32660);
+			}
+
+			entitypotion.setThrowableHeading(d0, d1 + (double) (f1 * 0.2F), d2, 0.75F, 8.0F);
+			this.worldObj.spawnEntityInWorld(entitypotion);
+			timer = 150;
 		}
-
-		entitypotion.setThrowableHeading(d0, d1 + (double) (f1 * 0.2F), d2, 0.75F, 8.0F);
-		this.worldObj.spawnEntityInWorld(entitypotion);
 	}
 }
