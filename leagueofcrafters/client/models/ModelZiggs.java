@@ -4,6 +4,7 @@ import leagueofcrafters.entity.EntityZiggs;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelZiggs extends ModelBase {
 	// fields
@@ -43,6 +44,11 @@ public class ModelZiggs extends ModelBase {
 	ModelRenderer HandBombFront;
 	ModelRenderer Fuse2;
 	ModelRenderer Earring;
+	ModelRenderer HeadFull;
+	ModelRenderer LLegFull;
+	ModelRenderer RLegFull;
+	ModelRenderer RArmFull;
+	ModelRenderer LArmFull;
 
 	public ModelZiggs() {
 		textureWidth = 64;
@@ -54,30 +60,54 @@ public class ModelZiggs extends ModelBase {
 		Body.setTextureSize(64, 32);
 		Body.mirror = true;
 		setRotation(Body, 0.1115358F, 0F, 0F);
+
+		LLegFull = new ModelRenderer(this, "LEFTLEGFULL");
 		LLeg = new ModelRenderer(this, 0, 10);
 		LLeg.addBox(0F, 0F, 0F, 1, 3, 2);
 		LLeg.setRotationPoint(2F, 19F, 0.5F);
 		LLeg.setTextureSize(64, 32);
 		LLeg.mirror = true;
 		setRotation(LLeg, -0.7807508F, -0.6320364F, 0F);
-		RLeg = new ModelRenderer(this, 0, 10);
-		RLeg.addBox(0F, 0F, 0F, 1, 3, 2);
-		RLeg.setRotationPoint(-3F, 19F, 0.5F);
-		RLeg.setTextureSize(64, 32);
-		RLeg.mirror = true;
-		setRotation(RLeg, -0.7435722F, 0.6320364F, 0F);
 		LLeg2 = new ModelRenderer(this, 0, 15);
 		LLeg2.addBox(0F, 0F, 0F, 1, 3, 1);
 		LLeg2.setRotationPoint(3F, 21.4F, -1.5F);
 		LLeg2.setTextureSize(64, 32);
 		LLeg2.mirror = true;
 		setRotation(LLeg2, 0.5205006F, -0.2230717F, 0F);
+		LFoot = new ModelRenderer(this, 0, 19);
+		LFoot.addBox(0F, 0F, 0F, 1, 1, 2);
+		LFoot.setRotationPoint(3.6F, 23F, -1.9F);
+		LFoot.setTextureSize(64, 32);
+		LFoot.mirror = true;
+		setRotation(LFoot, 0F, -0.4833219F, 0F);
+		LLegFull.addChild(LLeg);
+		LLegFull.addChild(LLeg2);
+		LLegFull.addChild(LFoot);
+
+		RLegFull = new ModelRenderer(this, "RightLEGFULL");
+
+		RLeg = new ModelRenderer(this, 0, 10);
+		RLeg.addBox(0F, 0F, 0F, 1, 3, 2);
+		RLeg.setRotationPoint(-3F, 19F, 0.5F);
+		RLeg.setTextureSize(64, 32);
+		RLeg.mirror = true;
+		setRotation(RLeg, -0.7435722F, 0.6320364F, 0F);
 		RLeg2 = new ModelRenderer(this, 0, 15);
 		RLeg2.addBox(0F, 0F, 0F, 1, 3, 1);
 		RLeg2.setRotationPoint(-4F, 21.2F, -1.5F);
 		RLeg2.setTextureSize(64, 32);
 		RLeg2.mirror = true;
 		setRotation(RLeg2, 0.2602503F, 0.2731595F, 0F);
+		RFoot = new ModelRenderer(this, 0, 19);
+		RFoot.addBox(0F, 0F, 0F, 1, 1, 2);
+		RFoot.setRotationPoint(-4.3F, 23F, -2.4F);
+		RFoot.setTextureSize(64, 32);
+		RFoot.mirror = true;
+		setRotation(RFoot, 0F, 0.2974289F, 0F);
+		RLegFull.addChild(RLeg);
+		RLegFull.addChild(RLeg2);
+		RLegFull.addChild(RFoot);
+
 		Head = new ModelRenderer(this, 36, 0);
 		Head.addBox(0F, 0F, 0F, 8, 5, 6);
 		Head.setRotationPoint(-4F, 11.1F, -4F);
@@ -90,18 +120,30 @@ public class ModelZiggs extends ModelBase {
 		Head2.setTextureSize(64, 32);
 		Head2.mirror = true;
 		setRotation(Head2, 0.4089647F, 0F, 0F);
-		RArm = new ModelRenderer(this, 18, 0);
-		RArm.addBox(0F, 0F, 0F, 4, 1, 1);
-		RArm.setRotationPoint(-4.5F, 18F, -3F);
-		RArm.setTextureSize(64, 32);
-		RArm.mirror = true;
-		setRotation(RArm, 0F, -0.5948578F, -0.5948578F);
-		LArm = new ModelRenderer(this, 18, 0);
-		LArm.addBox(0F, 0F, 0F, 4, 1, 1);
-		LArm.setRotationPoint(1.8F, 15.6F, -1F);
-		LArm.setTextureSize(64, 32);
-		LArm.mirror = true;
-		setRotation(LArm, 0F, 0.5948578F, 0.6320364F);
+		LEar = new ModelRenderer(this, 36, 11);
+		LEar.addBox(0F, 0F, 0F, 3, 5, 1);
+		LEar.setRotationPoint(5F, 7F, 0F);
+		LEar.setTextureSize(64, 32);
+		LEar.mirror = true;
+		setRotation(LEar, -0.2974289F, 0F, 0.669215F);
+		REar = new ModelRenderer(this, 36, 11);
+		REar.addBox(0F, 0F, 0F, 3, 5, 1);
+		REar.setRotationPoint(-5F, 7F, 1F);
+		REar.setTextureSize(64, 32);
+		REar.mirror = true;
+		setRotation(REar, 0.2974289F, 3.141593F, -0.669215F);
+		LEar2 = new ModelRenderer(this, 30, 11);
+		LEar2.addBox(0F, 0F, 0F, 2, 3, 1);
+		LEar2.setRotationPoint(5F, 6.5F, 0.5F);
+		LEar2.setTextureSize(64, 32);
+		LEar2.mirror = true;
+		setRotation(LEar2, -0.3346075F, -0.1487144F, 0F);
+		REar2 = new ModelRenderer(this, 30, 11);
+		REar2.addBox(0F, 0F, 0F, 2, 3, 1);
+		REar2.setRotationPoint(-7F, 6.5F, 0.5F);
+		REar2.setTextureSize(64, 32);
+		REar2.mirror = true;
+		setRotation(REar2, -0.2974289F, 0F, 0F);
 		LCheek = new ModelRenderer(this, 52, 16);
 		LCheek.addBox(0F, 0F, 0F, 2, 3, 4);
 		LCheek.setRotationPoint(3F, 12F, -3F);
@@ -144,6 +186,32 @@ public class ModelZiggs extends ModelBase {
 		Goatee.setTextureSize(64, 32);
 		Goatee.mirror = true;
 		setRotation(Goatee, 0F, 0F, 0F);
+		Earring = new ModelRenderer(this, 26, 11);
+		Earring.addBox(0F, 0F, 0F, 0, 2, 2);
+		Earring.setRotationPoint(6F, 9F, -0.1F);
+		Earring.setTextureSize(64, 32);
+		Earring.mirror = true;
+		setRotation(Earring, -0.7435722F, 0F, -0.1487144F);
+
+		RArm = new ModelRenderer(this, 18, 0);
+		RArm.addBox(0F, 0F, 0F, 4, 1, 1);
+		RArm.setRotationPoint(-4.5F, 18F, -3F);
+		RArm.setTextureSize(64, 32);
+		RArm.mirror = true;
+		setRotation(RArm, 0F, -0.5948578F, -0.5948578F);
+
+		LArm = new ModelRenderer(this, 18, 0);
+		LArm.addBox(0F, 0F, 0F, 4, 1, 1);
+		LArm.setRotationPoint(1.8F, 15.6F, -1F);
+		LArm.setTextureSize(64, 32);
+		LArm.mirror = true;
+		setRotation(LArm, 0F, 0.5948578F, 0.6320364F);
+		// /LArm.addChild(HandBomb);
+		// LArm.addChild(HandBombFront);
+		// LArm.addChild(HandBombSide);
+		// /LArm.addChild(HandBombTop);
+		// LArm.addChild(Fuse2);
+
 		Plate = new ModelRenderer(this, 16, 4);
 		Plate.addBox(0F, 0F, 0F, 3, 4, 2);
 		Plate.setRotationPoint(-1.5F, 16.5F, -2.5F);
@@ -186,48 +254,13 @@ public class ModelZiggs extends ModelBase {
 		BombRight.setTextureSize(64, 32);
 		BombRight.mirror = true;
 		setRotation(BombRight, 0.1487144F, 0F, 0F);
-		LFoot = new ModelRenderer(this, 0, 19);
-		LFoot.addBox(0F, 0F, 0F, 1, 1, 2);
-		LFoot.setRotationPoint(3.6F, 23F, -1.9F);
-		LFoot.setTextureSize(64, 32);
-		LFoot.mirror = true;
-		setRotation(LFoot, 0F, -0.4833219F, 0F);
-		RFoot = new ModelRenderer(this, 0, 19);
-		RFoot.addBox(0F, 0F, 0F, 1, 1, 2);
-		RFoot.setRotationPoint(-4.3F, 23F, -2.4F);
-		RFoot.setTextureSize(64, 32);
-		RFoot.mirror = true;
-		setRotation(RFoot, 0F, 0.2974289F, 0F);
 		Fuse = new ModelRenderer(this, 14, 19);
 		Fuse.addBox(0F, 0F, 0F, 0, 4, 1);
 		Fuse.setRotationPoint(0F, 11F, 5.6F);
 		Fuse.setTextureSize(64, 32);
 		Fuse.mirror = true;
 		setRotation(Fuse, -0.6320364F, 0F, 0F);
-		LEar = new ModelRenderer(this, 36, 11);
-		LEar.addBox(0F, 0F, 0F, 3, 5, 1);
-		LEar.setRotationPoint(5F, 7F, 0F);
-		LEar.setTextureSize(64, 32);
-		LEar.mirror = true;
-		setRotation(LEar, -0.2974289F, 0F, 0.669215F);
-		REar = new ModelRenderer(this, 36, 11);
-		REar.addBox(0F, 0F, 0F, 3, 5, 1);
-		REar.setRotationPoint(-5F, 7F, 1F);
-		REar.setTextureSize(64, 32);
-		REar.mirror = true;
-		setRotation(REar, 0.2974289F, 3.141593F, -0.669215F);
-		LEar2 = new ModelRenderer(this, 30, 11);
-		LEar2.addBox(0F, 0F, 0F, 2, 3, 1);
-		LEar2.setRotationPoint(5F, 6.5F, 0.5F);
-		LEar2.setTextureSize(64, 32);
-		LEar2.mirror = true;
-		setRotation(LEar2, -0.3346075F, -0.1487144F, 0F);
-		REar2 = new ModelRenderer(this, 30, 11);
-		REar2.addBox(0F, 0F, 0F, 2, 3, 1);
-		REar2.setRotationPoint(-7F, 6.5F, 0.5F);
-		REar2.setTextureSize(64, 32);
-		REar2.mirror = true;
-		setRotation(REar2, -0.2974289F, 0F, 0F);
+
 		HandBomb = new ModelRenderer(this, 25, 22);
 		HandBomb.addBox(0F, 0F, 0F, 3, 3, 3);
 		HandBomb.setRotationPoint(3F, 16.7F, -4.5F);
@@ -258,28 +291,18 @@ public class ModelZiggs extends ModelBase {
 		Fuse2.setTextureSize(64, 32);
 		Fuse2.mirror = true;
 		setRotation(Fuse2, -0.4089647F, -0.2230717F, 0.5948578F);
-		Earring = new ModelRenderer(this, 26, 11);
-		Earring.addBox(0F, 0F, 0F, 0, 2, 2);
-		Earring.setRotationPoint(6F, 9F, -0.1F);
-		Earring.setTextureSize(64, 32);
-		Earring.mirror = true;
-		setRotation(Earring, -0.7435722F, 0F, -0.1487144F);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		this.renderZiggs((EntityZiggs) entity, f, f1, f2, f3, f4, f5);
-		setRotation(REar2, -0.2974289F, 0F, 0F);
-
 	}
 
 	private void renderZiggs(EntityZiggs entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		RLegFull.render(f5);
+		LLegFull.render(f5);
 		Body.render(f5);
-		LLeg.render(f5);
-		RLeg.render(f5);
-		LLeg2.render(f5);
-		RLeg2.render(f5);
 		Head.render(f5);
 		Head2.render(f5);
 		RArm.render(f5);
@@ -298,8 +321,6 @@ public class ModelZiggs extends ModelBase {
 		Shape1.render(f5);
 		BombLeft.render(f5);
 		BombRight.render(f5);
-		LFoot.render(f5);
-		RFoot.render(f5);
 		Fuse.render(f5);
 		LEar.render(f5);
 		REar.render(f5);
@@ -323,6 +344,21 @@ public class ModelZiggs extends ModelBase {
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+
+		this.LLegFull.rotateAngleX = MathHelper.cos(f * 0.6662F) * .24F * f1 * 0.5F;
+		this.LLegFull.rotateAngleY = 0.0f;
+
+		this.RLegFull.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * .24F * f1;
+		this.RLegFull.rotateAngleY = 0.0F;
+
+		this.LArm.rotateAngleX = MathHelper.cos((float) Math.PI) * .6F * f1;
+		this.HandBomb.rotateAngleX = MathHelper.cos((float) Math.PI) * .3F * f1;
+		this.HandBombSide.rotateAngleX = MathHelper.cos((float) Math.PI) * .3F * f1;
+		this.HandBombTop.rotateAngleX = MathHelper.cos((float) Math.PI) * .3F * f1;
+		this.HandBombFront.rotateAngleX = MathHelper.cos((float) Math.PI) * .3F * f1;
+		this.Fuse2.rotateAngleX = MathHelper.cos((float) Math.PI) * .3F * f1;
+		this.RArm.rotateAngleX = MathHelper.cos(f * 0.6662F) * f1;
+
 	}
 
 }
