@@ -62,14 +62,13 @@ public class LeagueofCrafters {
 
 		blowdart = (ItemBlowdart) new ItemBlowdart(5003).setMaxStackSize(1).setUnlocalizedName("Blowdart").setCreativeTab(tabLeagueofCrafters);
 		LanguageRegistry.addName(blowdart, "Blowdart");
-		
-		doransblade = (ItemDoransBlade) new ItemDoransBlade(5004, DORANS).setMaxStackSize(1).setUnlocalizedName("Doran's Blade").setCreativeTab(tabLeagueofCrafters);
+
+		doransblade = (ItemDoransBlade) new ItemDoransBlade(5004, DORANS).setMaxStackSize(1).setUnlocalizedName("Doran's Blade")
+				.setCreativeTab(tabLeagueofCrafters);
 		LanguageRegistry.addName(doransblade, "Doran's Blade");
-		
-		
+
 		missle = (ItemMissle) new ItemMissle(5005).setMaxStackSize(64).setUnlocalizedName("Missle").setCreativeTab(tabLeagueofCrafters);
 		LanguageRegistry.addName(missle, "Missle");
-
 
 		EntityRegistry.registerGlobalEntityID(EntityTeemo.class, "Teemo", EntityRegistry.findGlobalUniqueEntityId(), 0 * 65536 + 255 * 256 + 0, (255 * 65536)
 				+ (0 * 256) + 255);
