@@ -30,6 +30,7 @@ public class LeagueofCrafters {
 	public static ItemBomb bomb;
 	public static ItemCannon cannon;
 	public static ItemBlowdart blowdart;
+	public static ItemMissle missle;
 
 	@Instance(value = "LoC")
 	public static LeagueofCrafters instance;
@@ -56,6 +57,14 @@ public class LeagueofCrafters {
 
 		blowdart = (ItemBlowdart) new ItemBlowdart(5003).setMaxStackSize(1).setUnlocalizedName("Blowdart").setCreativeTab(CreativeTabs.tabCombat);
 		LanguageRegistry.addName(blowdart, "Blowdart");
+		
+		
+		
+		
+		
+		missle = (ItemMissle) new ItemMissle(5005).setMaxStackSize(64).setUnlocalizedName("Missle").setCreativeTab(CreativeTabs.tabCombat);
+		LanguageRegistry.addName(missle, "Missle");
+
 
 		EntityRegistry.registerGlobalEntityID(EntityTeemo.class, "Teemo", EntityRegistry.findGlobalUniqueEntityId(), 0 * 65536 + 255 * 256 + 0, (255 * 65536)
 				+ (0 * 256) + 255);
