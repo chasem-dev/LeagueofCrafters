@@ -5,12 +5,10 @@ import leagueofcrafters.items.*;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.EnumHelper;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -28,13 +26,11 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @NetworkMod(clientSideRequired = true)
 public class LeagueofCrafters {
 
-	public static CreativeTabs tabLeagueofCrafters = new tabLeagueofCrafters(CreativeTabs.getNextID(), "League of Crafters");
 	public static ItemDart dart;
 	public static ItemBomb bomb;
 	public static ItemCannon cannon;
 	public static ItemBlowdart blowdart;
-	public static ItemDoransBlade doransblade;
-	public static EnumToolMaterial DORANS = EnumHelper.addToolMaterial("DORANS", 2, 200, 6.5f, 2f, 14);
+	public static ItemMissle missle;
 
 	@Instance(value = "LoC")
 	public static LeagueofCrafters instance;
@@ -49,22 +45,26 @@ public class LeagueofCrafters {
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
 		EntityRegistry.registerModEntity(EntityDart.class, "Dart", 1000, this, 80, 1, true);
-		dart = (ItemDart) new ItemDart(5001).setMaxStackSize(64).setUnlocalizedName("Dart").setCreativeTab(tabLeagueofCrafters);
+		dart = (ItemDart) new ItemDart(5001).setMaxStackSize(64).setUnlocalizedName("Dart").setCreativeTab(CreativeTabs.tabCombat);
 		LanguageRegistry.addName(dart, "Dart");
 
 		EntityRegistry.registerModEntity(EntityBomb.class, "Bomb", 1003, this, 80, 1, true);
-		bomb = (ItemBomb) new ItemBomb(5000).setMaxStackSize(64).setUnlocalizedName("Bomb").setCreativeTab(tabLeagueofCrafters);
+		bomb = (ItemBomb) new ItemBomb(5000).setMaxStackSize(64).setUnlocalizedName("Bomb").setCreativeTab(CreativeTabs.tabCombat);
 		LanguageRegistry.addName(bomb, "Bomb");
 
-		cannon = (ItemCannon) new ItemCannon(5002).setMaxStackSize(1).setUnlocalizedName("Cannon").setCreativeTab(tabLeagueofCrafters);
+		cannon = (ItemCannon) new ItemCannon(5002).setMaxStackSize(1).setUnlocalizedName("Cannon").setCreativeTab(CreativeTabs.tabCombat);
 		LanguageRegistry.addName(cannon, "Cannon");
 
-		blowdart = (ItemBlowdart) new ItemBlowdart(5003).setMaxStackSize(1).setUnlocalizedName("Blowdart").setCreativeTab(tabLeagueofCrafters);
+		blowdart = (ItemBlowdart) new ItemBlowdart(5003).setMaxStackSize(1).setUnlocalizedName("Blowdart").setCreativeTab(CreativeTabs.tabCombat);
 		LanguageRegistry.addName(blowdart, "Blowdart");
+		
+		
+		
+		
+		
+		missle = (ItemMissle) new ItemMissle(5005).setMaxStackSize(64).setUnlocalizedName("Missle").setCreativeTab(CreativeTabs.tabCombat);
+		LanguageRegistry.addName(missle, "Missle");
 
-		doransblade = (ItemDoransBlade) new ItemDoransBlade(5004, DORANS).setMaxStackSize(1).setUnlocalizedName("DoransBlade").setCreativeTab(
-				tabLeagueofCrafters);
-		LanguageRegistry.addName(doransblade, "Doran's Blade");
 
 		EntityRegistry.registerGlobalEntityID(EntityTeemo.class, "Teemo", EntityRegistry.findGlobalUniqueEntityId(), 0 * 65536 + 255 * 256 + 0, (255 * 65536)
 				+ (0 * 256) + 255);
