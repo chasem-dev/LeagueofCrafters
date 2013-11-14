@@ -25,8 +25,6 @@ public class ItemDoransBlade extends ItemSword {
 	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
 		if (par3Entity instanceof EntityPlayer) {
 			if (((EntityPlayer) par3Entity).getHeldItem() == par1ItemStack) {
-				//((EntityPlayer) par3Entity).addPotionEffect(new PotionEffect(Potion.field_76434_w.id, 0, 0));
-				//((EntityPlayer) par3Entity).setHealth(24);
 				((EntityLivingBase) par3Entity).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(21.0D);
 			}else{
 				((EntityLivingBase) par3Entity).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);

@@ -1,6 +1,6 @@
 package leagueofcrafters.client.renderer;
 
-import leagueofcrafters.client.models.ModelZiggs;
+import leagueofcrafters.client.models.ModelTwitch;
 import leagueofcrafters.entity.EntityTwitch;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelWitch;
@@ -15,10 +15,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class RenderTwitch extends RenderLiving {
 
-	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/ziggs.png"); // refers
-	protected ModelZiggs model;
+	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/twitch.png"); // refers
+	protected ModelTwitch model;
 
-	public RenderTwitch(ModelZiggs par1ModelBase, float par2) {
+	public RenderTwitch(ModelTwitch par1ModelBase, float par2) {
 		super(par1ModelBase, par2);
 		model = par1ModelBase;
 	}
