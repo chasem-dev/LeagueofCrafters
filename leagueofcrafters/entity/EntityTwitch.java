@@ -3,10 +3,13 @@ package leagueofcrafters.entity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+import java.awt.Color;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
+import leagueofcrafters.client.ParticleEffects;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -29,6 +32,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 	private static final UUID field_110184_bp = UUID.fromString("5CD17E52-A79A-43D3-A529-90FDE04B181E");
@@ -100,6 +104,8 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 	 * sunlight and start to burn.
 	 */
 	public void onLivingUpdate() {
+		//ParticleEffects.spawnParticle("fly", (double) this.posX - .1, (double) this.posY + 1.1D, (double) this.posZ + .1, -1, Color.BLACK.getGreen(), Color.BLACK.getBlue());
+		
 		if (!this.worldObj.isRemote) {
 			ItemStack itemstack = this.getHeldItem();
 			this.setCurrentItemOrArmor(0, (ItemStack) null);
@@ -185,6 +191,19 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 				this.dropItem(i1, 1);
 			}
 		}
+	}
+
+	@Override
+	public boolean getCanSpawnHere() {
+		if (worldObj.villageCollectionObj.getVillageList().iterator().hasNext()
+				&& worldObj.villageCollectionObj.findNearestVillage((int) this.posX, (int) this.posY, (int) this.posZ, 10) == null) {
+			return false;
+		}
+		return true;
+	}
+
+	protected boolean canDespawn() {
+		return true;
 	}
 
 	/**

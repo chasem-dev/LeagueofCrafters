@@ -24,11 +24,15 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerRenderers() {
-		RenderingRegistry.registerEntityRenderingHandler(EntityTeemo.class, new RenderTeemo(new ModelTeemo(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTeemo.class, new RenderTeemo(new ModelTeemo(), 0.5F, 1.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityZiggs.class, new RenderZiggs(new ModelZiggs(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDart.class, new RenderDart());
+		RenderingRegistry.registerEntityRenderingHandler(EntityFire.class, new RenderFire(0.01F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBomb.class, new RenderBomb(new ModelBomb(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTristanaBomb.class, new RenderTristanaBomb(new ModelTristanaBomb(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTwitch.class, new RenderTwitch(new ModelTwitch(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTristana.class, new RenderTristana(new ModelTristana(), 0.5F, 1.2F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityAnnie.class, new RenderAnnie(new ModelAnnie(), 0.5F, 1.2F));
 
 	}
 
@@ -40,10 +44,19 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerSpawns() {
 		EntityRegistry.addSpawn(EntityTeemo.class, 10000, 1, 1, EnumCreatureType.creature, BiomeGenBase.jungle, BiomeGenBase.forest, BiomeGenBase.forestHills,
-				BiomeGenBase.jungle, BiomeGenBase.jungleHills, BiomeGenBase.plains);
+				BiomeGenBase.jungleHills, BiomeGenBase.plains);
 
 		EntityRegistry.addSpawn(EntityZiggs.class, 10000, 1, 1, EnumCreatureType.creature, BiomeGenBase.plains, BiomeGenBase.extremeHills,
 				BiomeGenBase.extremeHillsEdge);
+
+		EntityRegistry.addSpawn(EntityTwitch.class, 10000, 1, 1, EnumCreatureType.creature, BiomeGenBase.swampland, BiomeGenBase.plains,
+				BiomeGenBase.mushroomIsland);
+
+		EntityRegistry.addSpawn(EntityTristana.class, 10000, 1, 1, EnumCreatureType.creature, BiomeGenBase.forest, BiomeGenBase.plains,
+				BiomeGenBase.extremeHills, BiomeGenBase.forestHills);
+
+		EntityRegistry.addSpawn(EntityAnnie.class, 10000, 1, 1, EnumCreatureType.creature, BiomeGenBase.hell, BiomeGenBase.plains, BiomeGenBase.desert,
+				BiomeGenBase.forestHills);
 
 	}
 }

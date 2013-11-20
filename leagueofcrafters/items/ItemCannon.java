@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
@@ -19,9 +20,11 @@ import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 
 public class ItemCannon extends Item {
-	public static final String[] bowPullIconNameArray = new String[] { "pulling_0", "pulling_1", "pulling_2" };
+	public static final String[] cannonPullIconNameArray = new String[] { "0", "1", "2", "3" };
 	@SideOnly(Side.CLIENT)
 	private Icon[] iconArray;
+	private Entity player;
+	private int iconNum;
 
 	public ItemCannon(int par1) {
 		super(par1);
@@ -128,6 +131,7 @@ public class ItemCannon extends Item {
 
 		if (par3EntityPlayer.capabilities.isCreativeMode || par3EntityPlayer.inventory.hasItem(LeagueofCrafters.bomb.itemID)) {
 			par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+			// itemInUseCount = this.getMaxItemUseDuration(par1ItemStack);
 		}
 
 		return par1ItemStack;
@@ -143,19 +147,69 @@ public class ItemCannon extends Item {
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon("league:" + "cannon_standby");
-		this.iconArray = new Icon[bowPullIconNameArray.length];
+		this.itemIcon = par1IconRegister.registerIcon("league:" + "cannon_0");
+		this.iconArray = new Icon[cannonPullIconNameArray.length];
 
 		for (int i = 0; i < this.iconArray.length; ++i) {
-			this.iconArray[i] = par1IconRegister.registerIcon("league:" + "cannon_" + bowPullIconNameArray[i]);
+			this.iconArray[i] = par1IconRegister.registerIcon("league:" + "cannon_" + cannonPullIconNameArray[i]);
 		}
+	}
+
+	@Override
+	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
+		if (par3Entity instanceof EntityPlayer) {
+			player = par3Entity;
+			int max = this.getMaxItemUseDuration(par1ItemStack);
+			int itemUseCount = ((EntityPlayer) par3Entity).getItemInUseCount();
+			this.getItemIcon(par1ItemStack, par4);
+			if (((EntityPlayer) par3Entity).getHeldItem().itemID == this.itemID) {
+				if (((EntityPlayer) par3Entity).getItemInUseCount() != 0)
+					this.itemIcon = this.iconArray[iconNum];
+				else {
+					this.itemIcon = this.iconArray[0];
+				}
+			} else {
+				this.itemIcon = this.iconArray[0];
+			}
+		}
+	}
+
+	public Icon getItemIcon(ItemStack par1ItemStack, int par2) {
+		Icon icon = super.getIcon(par1ItemStack, par2);
+		int j = this.getMaxItemUseDuration(par1ItemStack) - ((EntityPlayer) player).getItemInUseCount();
+
+		if (player instanceof EntityPlayer)
+
+			if (((EntityPlayer) player).getHeldItem().itemID == this.itemID) {
+
+				if (j >= 18) {
+					return this.getItemIconForUseDuration(3);
+				}
+
+				if (j > 13) {
+					return this.getItemIconForUseDuration(2);
+				}
+
+				if (j > 0) {
+					return this.getItemIconForUseDuration(1);
+				} else {
+					return this.getItemIconForUseDuration(0);
+				}
+			} else {
+				return par1ItemStack.getItem().getIconFromDamage(0);
+			}
+		icon = par1ItemStack.getItem().getIcon(par1ItemStack, par2, (EntityPlayer) player, ((EntityPlayer) player).getItemInUse(),
+				((EntityPlayer) player).getItemInUseCount());
+
+		return icon;
 	}
 
 	@SideOnly(Side.CLIENT)
 	/**
-	 * used to cycle through icons based on their used duration, i.e. for the bow
+	 * used to cycle through icons based on their used duration, i.e. for the cannon
 	 */
 	public Icon getItemIconForUseDuration(int par1) {
+		iconNum = par1;
 		return this.iconArray[par1];
 	}
 }

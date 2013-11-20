@@ -34,12 +34,11 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class EntityTristana extends EntityMob implements IRangedAttackMob {
+public class EntityAnnie extends EntityMob implements IRangedAttackMob {
 
 	public static int timer;
-	public static boolean hasMissle;
 
-	public EntityTristana(World par1World) {
+	public EntityAnnie(World par1World) {
 		super(par1World);
 		this.setSize(1, 1);
 		this.tasks.addTask(1, new EntityAISwimming(this));
@@ -68,11 +67,8 @@ public class EntityTristana extends EntityMob implements IRangedAttackMob {
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2) {
 		if (timer <= 0) {
-			EntityTristanaBomb entityarrow = new EntityTristanaBomb(this.worldObj, this, par1EntityLivingBase, 1.6F,
-					(float) (14 - this.worldObj.difficultySetting * 4));
+			EntityFire entityarrow = new EntityFire(this.worldObj, this, par1EntityLivingBase, 1.6F, (float) (14 - this.worldObj.difficultySetting * 4));
 			entityarrow.setPosition(this.posX, this.posY, this.posZ);
-			// entityarrow.setDamage((double) (par2 * 2.0F) +
-			// this.rand.nextGaussian() * 0.15D);
 			this.worldObj.spawnEntityInWorld(entityarrow);
 			timer = 100;
 		}
@@ -110,17 +106,17 @@ public class EntityTristana extends EntityMob implements IRangedAttackMob {
 
 	@Override
 	protected String getLivingSound() {
-		return "league:tristana";
+		return "league:annie";
 	}
 
 	@Override
 	protected String getHurtSound() {
-		return "league:tristana.hurt";
+		return "league:annie.hurt";
 	}
 
 	@Override
 	protected String getDeathSound() {
-		return "league:tristana.death";
+		return "league:annie.death";
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package leagueofcrafters.items;
 
+import leagueofcrafters.DamageHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -12,7 +13,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.stats.StatBase;
+import net.minecraft.stats.StatList;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public class ItemDoransBlade extends ItemSword {
 
@@ -26,17 +31,23 @@ public class ItemDoransBlade extends ItemSword {
 		if (par3Entity instanceof EntityPlayer) {
 			if (((EntityPlayer) par3Entity).getHeldItem() == par1ItemStack) {
 				((EntityLivingBase) par3Entity).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(21.0D);
-			}else{
+			} else {
 				((EntityLivingBase) par3Entity).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
 			}
-			
+			if (DamageHandler.damageDealt != 0 && DamageHandler.damageDealt < 0) {
+				if (((EntityPlayer) par3Entity).getHealth() != (((EntityPlayer) par3Entity).getMaxHealth())
+						&& ((EntityPlayer) par3Entity).getHealth() < (((EntityPlayer) par3Entity).getMaxHealth()))
+					((EntityPlayer) par3Entity).setHealth(((EntityPlayer) par3Entity).getHealth() + 1);
+			} else {
+				return;
+			}
 		}
 
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister){
+	public void registerIcons(IconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("league:doransblade");
 	}
-	
+
 }

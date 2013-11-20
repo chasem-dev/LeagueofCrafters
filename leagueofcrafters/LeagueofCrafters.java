@@ -23,6 +23,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraftforge.common.EnumHelper;
+import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = "LoC", name = "League Of Crafters", version = "0.0.1")
 @NetworkMod(clientSideRequired = true)
@@ -45,6 +46,8 @@ public class LeagueofCrafters {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(new DamageHandler());
+
 	}
 
 	@EventHandler
@@ -60,15 +63,15 @@ public class LeagueofCrafters {
 		cannon = (ItemCannon) new ItemCannon(5002).setMaxStackSize(1).setUnlocalizedName("Cannon").setCreativeTab(tabLeagueofCrafters);
 		LanguageRegistry.addName(cannon, "Cannon");
 
-		blowdart = (ItemBlowdart) new ItemBlowdart(5003).setMaxStackSize(1).setUnlocalizedName("Blowdart").setCreativeTab(tabLeagueofCrafters);
-		LanguageRegistry.addName(blowdart, "Blowdart");
+		//blowdart = (ItemBlowdart) new ItemBlowdart(5003).setMaxStackSize(1).setUnlocalizedName("Blowdart").setCreativeTab(tabLeagueofCrafters);
+		//LanguageRegistry.addName(blowdart, "Blowdart");
 
 		doransblade = (ItemDoransBlade) new ItemDoransBlade(5004, DORANS).setMaxStackSize(1).setUnlocalizedName("Doran's Blade")
 				.setCreativeTab(tabLeagueofCrafters);
 		LanguageRegistry.addName(doransblade, "Doran's Blade");
 
-		missle = (ItemMissle) new ItemMissle(5005).setMaxStackSize(64).setUnlocalizedName("Missle").setCreativeTab(tabLeagueofCrafters);
-		LanguageRegistry.addName(missle, "Missle");
+		//missle = (ItemMissle) new ItemMissle(5005).setMaxStackSize(64).setUnlocalizedName("Missle").setCreativeTab(tabLeagueofCrafters);
+		//LanguageRegistry.addName(missle, "Missle");
 
 		EntityRegistry.registerGlobalEntityID(EntityTeemo.class, "Teemo", EntityRegistry.findGlobalUniqueEntityId(), 0 * 65536 + 255 * 256 + 0, (255 * 65536)
 				+ (0 * 256) + 255);
@@ -83,6 +86,19 @@ public class LeagueofCrafters {
 		EntityRegistry.registerModEntity(EntityTwitch.class, "Twitch", 1004, this, 80, 1, true);
 		LanguageRegistry.instance().addStringLocalization("entity.Twitch.name", "en_US", "Twitch");
 
+		EntityRegistry.registerModEntity(EntityTristanaBomb.class, "tristanaBomb", 1005, this, 80, 1, true);
+
+		EntityRegistry.registerGlobalEntityID(EntityTristana.class, "Tristana", EntityRegistry.findGlobalUniqueEntityId(), 1556262, 333335);
+		EntityRegistry.registerModEntity(EntityTristana.class, "Tristana", 1006, this, 80, 1, true);
+		LanguageRegistry.instance().addStringLocalization("entity.Tristana.name", "en_US", "Tristana");
+
+		EntityRegistry.registerGlobalEntityID(EntityAnnie.class, "Annie", EntityRegistry.findGlobalUniqueEntityId(), 1323451, 33532415);
+		EntityRegistry.registerModEntity(EntityAnnie.class, "Annie", 1007, this, 80, 1, true);
+		LanguageRegistry.instance().addStringLocalization("entity.Annie.name", "en_US", "Annie");
+
+		EntityRegistry.registerModEntity(EntityFire.class, "Fire", 1008, this, 80, 1, true);
+
+		
 		proxy.registerRenderers();
 		proxy.registerSpawns();
 		proxy.registerSound();

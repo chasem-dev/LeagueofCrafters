@@ -1,37 +1,28 @@
 package leagueofcrafters.entity;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import java.util.List;
 
-import leagueofcrafters.LeagueofCrafters;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentThorns;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet70GameEvent;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityMissle extends EntityThrowable implements IProjectile {
+public class EntityFire extends EntityThrowable implements IProjectile {
 	private int xTile = -1;
 	private int yTile = -1;
 	private int zTile = -1;
@@ -39,30 +30,30 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 	private int inData;
 	private boolean inGround;
 
-	/** 1 if the player can pick up the Missle */
+	/** 1 if the player can pick up the Fire */
 	public int canBePickedUp;
 
-	/** Seems to be some sort of timer for animating an Missle. */
-	public int MissleShake;
+	/** Seems to be some sort of timer for animating an Fire. */
+	public int FireShake;
 
-	/** The owner of this Missle. */
+	/** The owner of this Fire. */
 	public Entity shootingEntity;
 	private int ticksInGround;
 	private int ticksInAir;
 	private double damage = 2D;
 
-	/** The amount of knockback an Missle applies when it hits a mob. */
+	/** The amount of knockback an Fire applies when it hits a mob. */
 	private int knockbackStrength;
 	public float animationNum1;
 	public EntityPlayer entity;
 
-	public EntityMissle(World par1World) {
+	public EntityFire(World par1World) {
 		super(par1World);
 		this.renderDistanceWeight = 10.0D;
 		this.setSize(0.5F, 0.5F);
 	}
 
-	public EntityMissle(World par1World, double par2, double par4, double par6) {
+	public EntityFire(World par1World, double par2, double par4, double par6) {
 		super(par1World);
 		this.renderDistanceWeight = 10.0D;
 		this.setSize(0.5F, 0.5F);
@@ -70,7 +61,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 		this.yOffset = 0.0F;
 	}
 
-	public EntityMissle(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase, float par4, float par5) {
+	public EntityFire(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase, float par4, float par5) {
 		super(par1World);
 		this.renderDistanceWeight = 10.0D;
 		this.shootingEntity = par2EntityLivingBase;
@@ -97,7 +88,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 		}
 	}
 
-	public EntityMissle(World par1World, EntityLivingBase par2EntityLivingBase, float par3) {
+	public EntityFire(World par1World, EntityLivingBase par2EntityLivingBase, float par3) {
 		super(par1World);
 		this.renderDistanceWeight = 10.0D;
 		this.shootingEntity = par2EntityLivingBase;
@@ -125,7 +116,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 	}
 
 	/**
-	 * Similar to setMissleHeading, it's point the throwable entity to a x, y, z
+	 * Similar to setFireHeading, it's point the throwable entity to a x, y, z
 	 * direction.
 	 */
 	public void setThrowableHeading(double par1, double par3, double par5, float par7, float par8) {
@@ -183,6 +174,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 	 */
 	public void onUpdate() {
 		super.onUpdate();
+		this.setFire(1);
 		if (!this.isEntityAlive()) {
 			this.setDead();
 		}
@@ -203,8 +195,8 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 			}
 		}
 
-		if (this.MissleShake > 0) {
-			--this.MissleShake;
+		if (this.FireShake > 0) {
+			--this.FireShake;
 		}
 
 		if (this.inGround) {
@@ -292,9 +284,9 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 					DamageSource damagesource = null;
 
 					if (this.shootingEntity == null) {
-						damagesource = this.causeMissleDamage(this, this);
+						damagesource = this.causeFireDamage(this, this);
 					} else {
-						damagesource = this.causeMissleDamage(this, this.shootingEntity);
+						damagesource = this.causeFireDamage(this, this.shootingEntity);
 					}
 
 					if (movingobjectposition.entityHit.attackEntityFrom(damagesource, (float) i1)) {
@@ -310,8 +302,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 								((EntityPlayerMP) this.shootingEntity).playerNetServerHandler.sendPacketToPlayer(new Packet70GameEvent(6, 0));
 							} else if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity
 									&& movingobjectposition.entityHit instanceof EntityPlayer || movingobjectposition.entityHit instanceof EntityPlayerMP) {
-								this.worldObj.createExplosion(this, movingobjectposition.entityHit.posX, movingobjectposition.entityHit.posY + 1,
-										movingobjectposition.entityHit.posZ, .3F, true);
+								movingobjectposition.entityHit.setFire(3);
 
 							}
 						}
@@ -341,7 +332,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 					this.posY -= this.motionY / (double) f2 * 0.05000000074505806D;
 					this.posZ -= this.motionZ / (double) f2 * 0.05000000074505806D;
 					this.inGround = true;
-					this.MissleShake = 7;
+					this.FireShake = 7;
 					this.setIsCritical(false);
 
 					if (this.inTile != 0) {
@@ -398,8 +389,8 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 		}
 	}
 
-	public static DamageSource causeMissleDamage(EntityMissle par0EntityMissle, Entity par1Entity) {
-		return (new EntityMissleDamageSource("Missle", par0EntityMissle, par1Entity)).setProjectile();
+	public static DamageSource causeFireDamage(EntityFire par0EntityFire, Entity par1Entity) {
+		return (new EntityFireDamageSource("Fire", par0EntityFire, par1Entity)).setProjectile();
 	}
 
 	/**
@@ -411,7 +402,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 		par1NBTTagCompound.setShort("zTile", (short) this.zTile);
 		par1NBTTagCompound.setByte("inTile", (byte) this.inTile);
 		par1NBTTagCompound.setByte("inData", (byte) this.inData);
-		par1NBTTagCompound.setByte("shake", (byte) this.MissleShake);
+		par1NBTTagCompound.setByte("shake", (byte) this.FireShake);
 		par1NBTTagCompound.setByte("inGround", (byte) (this.inGround ? 1 : 0));
 		par1NBTTagCompound.setByte("pickup", (byte) this.canBePickedUp);
 		par1NBTTagCompound.setDouble("damage", this.damage);
@@ -426,7 +417,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 		this.zTile = par1NBTTagCompound.getShort("zTile");
 		this.inTile = par1NBTTagCompound.getByte("inTile") & 255;
 		this.inData = par1NBTTagCompound.getByte("inData") & 255;
-		this.MissleShake = par1NBTTagCompound.getByte("shake") & 255;
+		this.FireShake = par1NBTTagCompound.getByte("shake") & 255;
 		this.inGround = par1NBTTagCompound.getByte("inGround") == 1;
 
 		if (par1NBTTagCompound.hasKey("damage")) {
@@ -473,7 +464,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 	}
 
 	/**
-	 * Sets the amount of knockback the Missle applies when it hits a mob.
+	 * Sets the amount of knockback the Fire applies when it hits a mob.
 	 */
 	public void setKnockbackStrength(int par1) {
 		this.knockbackStrength = par1;
@@ -487,8 +478,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 	}
 
 	/**
-	 * Whether the Missle has a stream of critical hit particles flying behind
-	 * it.
+	 * Whether the Fire has a stream of critical hit particles flying behind it.
 	 */
 	public void setIsCritical(boolean par1) {
 		byte b0 = this.dataWatcher.getWatchableObjectByte(16);
@@ -501,8 +491,7 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 	}
 
 	/**
-	 * Whether the Missle has a stream of critical hit particles flying behind
-	 * it.
+	 * Whether the Fire has a stream of critical hit particles flying behind it.
 	 */
 	public boolean getIsCritical() {
 		byte b0 = this.dataWatcher.getWatchableObjectByte(16);
@@ -512,8 +501,14 @@ public class EntityMissle extends EntityThrowable implements IProjectile {
 	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
 		if (this.inGround) {
-			this.worldObj.createExplosion(this, this.posX, this.posY + 0.5F, this.posZ, 0.75F, true);
+			// this.worldObj.createExplosion(this, this.posX, this.posY + 0.5F,
+			// this.posZ, 0.75F, true);
+			this.setFire(3);
 			this.setDead();
+			// } else if (this.entity != null) {
+			// this.worldObj.createExplosion(this, this.posX, this.posY + 0.5F,
+			// this.posZ, 0.75F, true);
+			// this.setDead();
 		}
 	}
 }

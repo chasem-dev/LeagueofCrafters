@@ -1,10 +1,7 @@
 package leagueofcrafters.client.renderer;
 
-import java.util.Random;
-
-import leagueofcrafters.RandomHelper;
-import leagueofcrafters.client.models.ModelTeemo;
-import leagueofcrafters.entity.EntityTeemo;
+import leagueofcrafters.client.models.ModelAnnie;
+import leagueofcrafters.entity.EntityAnnie;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -13,36 +10,33 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-public class RenderTeemo extends RenderLiving {
+public class RenderAnnie extends RenderLiving {
 
-	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/teemo.png"); // refers
-	private final ResourceLocation texture2 = new ResourceLocation("league", "textures/models/teemo2.png"); // refers
-	private int num = RandomHelper.getRandomNumberBetween(0, 100);
-
-	protected ModelTeemo model;
+	private final ResourceLocation texture = new ResourceLocation("league", "textures/models/annie.png"); // refers
+	protected ModelAnnie model;
 	private float scale;
 
-	public RenderTeemo(ModelTeemo par1ModelBase, float par2, float par3) {
+	public RenderAnnie(ModelAnnie par1ModelBase, float par2, float par3) {
 		super(par1ModelBase, par2 * par3);
 		model = par1ModelBase;
 		this.scale = par3;
 	}
 
-	public void renderTeemo(EntityTeemo par1EntityTeemo, double par2, double par4, double par6, float par8, float par9) {
-		super.doRenderLiving(par1EntityTeemo, par2, par4, par6, par8, par9);
+	public void renderAnnie(EntityAnnie par1EntityAnnie, double par2, double par4, double par6, float par8, float par9) {
+		super.doRenderLiving(par1EntityAnnie, par2, par4, par6, par8, par9);
 	}
 
 	public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
-		this.renderTeemo((EntityTeemo) par1EntityLiving, par2, par4, par6, par8, par9);
+		this.renderAnnie((EntityAnnie) par1EntityLiving, par2, par4, par6, par8, par9);
 	}
 
-	protected void preRenderScale(EntityTeemo par1EntityTeemo, float par2) {
-		GL11.glScalef(this.scale, this.scale, this.scale);
+	protected void preRenderScale(EntityAnnie par1EntityAnnie, float par2) {
+		GL11.glScalef(0.875F, 0.875F, 0.875F);
 	}
 
 	@Override
 	protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2) {
-		this.preRenderScale((EntityTeemo) par1EntityLivingBase, par2);
+		this.preRenderScale((EntityAnnie) par1EntityLivingBase, par2);
 	}
 
 	/**
@@ -54,11 +48,10 @@ public class RenderTeemo extends RenderLiving {
 	 * f1). But JAD is pre 1.5 so doesn't do that.
 	 */
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
-		this.renderTeemo((EntityTeemo) par1Entity, par2, par4, par6, par8, par9);
+		this.renderAnnie((EntityAnnie) par1Entity, par2, par4, par6, par8, par9);
 	}
 
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		int num1 = RandomHelper.getRandomNumberBetween(0, 100);
 		return texture;
 	}
 

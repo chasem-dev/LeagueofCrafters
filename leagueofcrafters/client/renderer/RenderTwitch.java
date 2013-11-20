@@ -4,6 +4,7 @@ import leagueofcrafters.client.models.ModelTwitch;
 import leagueofcrafters.entity.EntityTwitch;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelWitch;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;

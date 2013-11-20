@@ -122,19 +122,18 @@ public class ModelTeemo extends ModelBase {
 		LLegFull.addChild(LBootDetail);
 
 		RArmFull = new ModelRenderer(this, "RARM");
-
 		RArm = new ModelRenderer(this, 56, 7);
 		RArm.addBox(0F, 0F, 0F, 1, 1, 3);
 		RArm.setRotationPoint(-3F, 19F, -3F);
 		RArm.setTextureSize(64, 32);
 		RArm.mirror = true;
-		setRotation(RArm, 0.3915114F, 0F, 0F);
+		setRotation(RArm, 0.3915114F, 0F, 0.669215F);
 		Blowgun = new ModelRenderer(this, 20, 0);
 		Blowgun.addBox(0F, 0F, 0F, 1, 6, 1);
 		Blowgun.setRotationPoint(-2F, 17F, -6F);
 		Blowgun.setTextureSize(64, 32);
 		Blowgun.mirror = true;
-		setRotation(Blowgun, 0.7063936F, -0.3717861F, 0.0743572F);
+		setRotation(Blowgun, 0.5063936F, -0.3717861F, 0.06F);
 
 		RArmFull.addChild(RArm);
 		RArmFull.addChild(Blowgun);
