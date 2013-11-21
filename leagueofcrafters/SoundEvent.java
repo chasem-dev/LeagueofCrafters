@@ -6,8 +6,8 @@ import net.minecraftforge.event.ForgeSubscribe;
 public class SoundEvent {
 	@ForgeSubscribe
 	public void onSoundLoad(SoundLoadEvent event) {
-		//event.manager.addSound("league:teemo.ogg");
-		 event.manager.addSound("league:ziggs.ogg");
+		event.manager.addMusic("league:league/SummonersCall.ogg");
+		event.manager.addSound("league:ziggs.ogg");
 
 	}
 }

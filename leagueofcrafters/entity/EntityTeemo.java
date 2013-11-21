@@ -84,9 +84,11 @@ public class EntityTeemo extends EntityMob implements IRangedAttackMob {
 	// return LeagueofCrafters.dart.itemID;
 	// }
 	protected void dropRareDrop(int par1) {
-		switch (this.rand.nextInt(2)) {
-		case 1:
-			this.dropItem(LeagueofCrafters.dart.itemID, 2);
+		switch (this.rand.nextInt(3)) {
+		case 0:
+			this.dropItem(Block.mushroomBrown.blockID, 2);
+		case 3:
+			this.dropItem(Block.mushroomRed.blockID, 2);
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import leagueofcrafters.LeagueofCrafters;
+import leagueofcrafters.RandomHelper;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -74,7 +75,7 @@ public class EntityTristana extends EntityMob implements IRangedAttackMob {
 			// entityarrow.setDamage((double) (par2 * 2.0F) +
 			// this.rand.nextGaussian() * 0.15D);
 			this.worldObj.spawnEntityInWorld(entityarrow);
-			timer = 100;
+			timer = 500;
 		}
 	}
 
@@ -105,7 +106,11 @@ public class EntityTristana extends EntityMob implements IRangedAttackMob {
 
 	@Override
 	protected int getDropItemId() {
-		return LeagueofCrafters.missle.itemID;
+	int num = RandomHelper.getRandomNumberBetween(1, 6);
+		if (num == 2)
+			return LeagueofCrafters.cannon.itemID;
+		else
+			return Item.rottenFlesh.itemID;
 	}
 
 	@Override

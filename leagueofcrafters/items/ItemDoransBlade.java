@@ -28,7 +28,7 @@ public class ItemDoransBlade extends ItemSword {
 
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
-		if (par3Entity instanceof EntityPlayer) {
+		/**if (par3Entity instanceof EntityPlayer) {
 			if (((EntityPlayer) par3Entity).getHeldItem() == par1ItemStack) {
 				((EntityLivingBase) par3Entity).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(21.0D);
 			} else {
@@ -42,7 +42,7 @@ public class ItemDoransBlade extends ItemSword {
 				return;
 			}
 		}
-
+**/
 	}
 
 	@SideOnly(Side.CLIENT)

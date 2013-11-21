@@ -4,12 +4,15 @@ import leagueofcrafters.LeagueofCrafters;
 import leagueofcrafters.entity.EntityBomb;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -29,7 +32,7 @@ public class ItemCannon extends Item {
 	public ItemCannon(int par1) {
 		super(par1);
 		this.maxStackSize = 1;
-		this.setMaxDamage(384);
+		this.setMaxDamage(100);
 		this.setCreativeTab(CreativeTabs.tabCombat);
 	}
 
@@ -162,15 +165,16 @@ public class ItemCannon extends Item {
 			int max = this.getMaxItemUseDuration(par1ItemStack);
 			int itemUseCount = ((EntityPlayer) par3Entity).getItemInUseCount();
 			this.getItemIcon(par1ItemStack, par4);
-			if (((EntityPlayer) par3Entity).getHeldItem().itemID == this.itemID) {
-				if (((EntityPlayer) par3Entity).getItemInUseCount() != 0)
-					this.itemIcon = this.iconArray[iconNum];
-				else {
+			if (((EntityPlayer) par3Entity).getHeldItem() != null)
+				if (((EntityPlayer) par3Entity).getHeldItem().itemID == this.itemID) {
+					if (((EntityPlayer) par3Entity).getItemInUseCount() != 0)
+						this.itemIcon = this.iconArray[iconNum];
+					else {
+						this.itemIcon = this.iconArray[0];
+					}
+				} else {
 					this.itemIcon = this.iconArray[0];
 				}
-			} else {
-				this.itemIcon = this.iconArray[0];
-			}
 		}
 	}
 
@@ -178,26 +182,26 @@ public class ItemCannon extends Item {
 		Icon icon = super.getIcon(par1ItemStack, par2);
 		int j = this.getMaxItemUseDuration(par1ItemStack) - ((EntityPlayer) player).getItemInUseCount();
 
-		if (player instanceof EntityPlayer)
+		if (player instanceof EntityPlayer || !(player instanceof EntityClientPlayerMP) || !(player instanceof EntityPlayerMP))
+			if (((EntityPlayer) player).getHeldItem() != null)
+				if (((EntityPlayer) player).getHeldItem().itemID == this.itemID) {
 
-			if (((EntityPlayer) player).getHeldItem().itemID == this.itemID) {
+					if (j >= 18) {
+						return this.getItemIconForUseDuration(3);
+					}
 
-				if (j >= 18) {
-					return this.getItemIconForUseDuration(3);
-				}
+					if (j > 13) {
+						return this.getItemIconForUseDuration(2);
+					}
 
-				if (j > 13) {
-					return this.getItemIconForUseDuration(2);
-				}
-
-				if (j > 0) {
-					return this.getItemIconForUseDuration(1);
+					if (j > 0) {
+						return this.getItemIconForUseDuration(1);
+					} else {
+						return this.getItemIconForUseDuration(0);
+					}
 				} else {
-					return this.getItemIconForUseDuration(0);
+					return par1ItemStack.getItem().getIconFromDamage(0);
 				}
-			} else {
-				return par1ItemStack.getItem().getIconFromDamage(0);
-			}
 		icon = par1ItemStack.getItem().getIcon(par1ItemStack, par2, (EntityPlayer) player, ((EntityPlayer) player).getItemInUse(),
 				((EntityPlayer) player).getItemInUseCount());
 
