@@ -2,9 +2,9 @@ package leagueofcrafters.client.renderer;
 
 import java.util.Random;
 
-import leagueofcrafters.RandomHelper;
 import leagueofcrafters.client.models.ModelTeemo;
 import leagueofcrafters.entity.EntityTeemo;
+import leagueofcrafters.handlers.RandomHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;

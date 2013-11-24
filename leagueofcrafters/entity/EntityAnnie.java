@@ -70,7 +70,7 @@ public class EntityAnnie extends EntityMob implements IRangedAttackMob {
 			EntityFire entityarrow = new EntityFire(this.worldObj, this, par1EntityLivingBase, 1.6F, (float) (14 - this.worldObj.difficultySetting * 4));
 			entityarrow.setPosition(this.posX, this.posY, this.posZ);
 			this.worldObj.spawnEntityInWorld(entityarrow);
-			timer = 500;
+			timer = 200;
 		}
 	}
 
@@ -101,7 +101,7 @@ public class EntityAnnie extends EntityMob implements IRangedAttackMob {
 
 	@Override
 	protected int getDropItemId() {
-		return LeagueofCrafters.missle.itemID;
+		return Item.gunpowder.itemID;
 	}
 
 	@Override

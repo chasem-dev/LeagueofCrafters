@@ -2,9 +2,9 @@ package leagueofcrafters.client;
 
 import leagueofcrafters.CommonProxy;
 import leagueofcrafters.LeagueofCrafters;
-import leagueofcrafters.SoundEvent;
 import leagueofcrafters.client.renderer.*;
 import leagueofcrafters.entity.*;
+import leagueofcrafters.handlers.SoundEvent;
 import leagueofcrafters.items.ItemBomb;
 import leagueofcrafters.client.models.*;
 import net.minecraft.block.Block;
@@ -59,6 +59,9 @@ public class ClientProxy extends CommonProxy {
 
 		EntityRegistry.addSpawn(EntityAnnie.class, 10000, 1, 1, EnumCreatureType.creature, BiomeGenBase.hell, BiomeGenBase.plains, BiomeGenBase.desert,
 				BiomeGenBase.forestHills);
+
+		EntityRegistry.addSpawn(EntityMundo.class, 10000, 1, 1, EnumCreatureType.creature, BiomeGenBase.desertHills, BiomeGenBase.extremeHills,
+				BiomeGenBase.taigaHills, BiomeGenBase.plains, BiomeGenBase.jungleHills, BiomeGenBase.forestHills);
 
 	}
 }

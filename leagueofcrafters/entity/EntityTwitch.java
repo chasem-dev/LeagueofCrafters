@@ -226,7 +226,7 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 
 			entitypotion.setThrowableHeading(d0, d1 + (double) (f1 * 0.2F), d2, 0.75F, 8.0F);
 			this.worldObj.spawnEntityInWorld(entitypotion);
-			timer = 500;
+			timer = 200;
 		}
 	}
 }

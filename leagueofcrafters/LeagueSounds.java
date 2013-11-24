@@ -6,12 +6,10 @@ import cpw.mods.fml.client.FMLClientHandler;
 
 public class LeagueSounds {
 
-	private static final String[] MusicList = { "SummonersCall" };
+	private static final String[] MusicList = { "GetJinxed", "SummonersCall", "SurprisePartyFiddlesticks" };
 
 	public static boolean installMusic() {
 		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("LoC");
-		// String min = (Minecraft.getMinecraft().mcDataDir +
-		// "/resources/sound/league/").toString();
 		for (String songName : MusicList) {
 			Minecraft.getMinecraft().sndManager.addMusic("league:league/" + songName + ".ogg");
 		}

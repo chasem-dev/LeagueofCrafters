@@ -1,27 +1,20 @@
 package leagueofcrafters;
 
-import leagueofcrafters.entity.EntityAnnie;
-import leagueofcrafters.entity.EntityBomb;
-import leagueofcrafters.entity.EntityDart;
-import leagueofcrafters.entity.EntityFire;
-import leagueofcrafters.entity.EntityKnife;
-import leagueofcrafters.entity.EntityMundo;
-import leagueofcrafters.entity.EntityTeemo;
-import leagueofcrafters.entity.EntityTristana;
-import leagueofcrafters.entity.EntityTristanaBomb;
-import leagueofcrafters.entity.EntityTwitch;
-import leagueofcrafters.entity.EntityZiggs;
-import leagueofcrafters.items.ItemBlowdart;
-import leagueofcrafters.items.ItemBomb;
-import leagueofcrafters.items.ItemCannon;
-import leagueofcrafters.items.ItemDart;
-import leagueofcrafters.items.ItemDoransBlade;
-import leagueofcrafters.items.ItemMissle;
+import java.io.File;
+
+import leagueofcrafters.entity.*;
+import leagueofcrafters.handlers.*;
+import leagueofcrafters.items.*;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.FMLCommonHandler;
+
+import org.lwjgl.input.Keyboard;
+
+import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -30,34 +23,51 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = "LoC", name = "League Of Crafters", version = "0.0.1")
-@NetworkMod(clientSideRequired = true)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class LeagueofCrafters {
 
 	public static CreativeTabs tabLeagueofCrafters = new tabLeagueofCrafters(CreativeTabs.getNextID(), "League of Crafters");
 	public static ItemDoransBlade doransblade;
-	public static EnumToolMaterial DORANS = EnumHelper.addToolMaterial("DORANS", 2, 200, 6.5f, 2f, 14);
+	public static EnumToolMaterial League = EnumHelper.addToolMaterial("LeagueArmor", 2, 200, 6.5f, 2f, 14);
+	public static EnumArmorMaterial LeagueArmor = EnumHelper.addArmorMaterial("LeagueArmor", 15, new int[] { 2, 6, 5, 2 }, 9);
+
 	public static ItemDart dart;
 	public static ItemBomb bomb;
 	public static ItemCannon cannon;
 	public static ItemBlowdart blowdart;
 	public static ItemMissle missle;
+	// public static ItemLeague league;
+	public static ItemLeague doransshield;
+	public static ItemLeagueArmor warmogs;
+	// public static ItemLeague frozenmallet;
+	private static int modGuiIndex = 0;
+	private static int modItemIndex = 7000;
+	public static final int ItemInventoryGuiIndex = modGuiIndex++;
 
 	@Instance(value = "LoC")
 	public static LeagueofCrafters instance;
 
 	@SidedProxy(clientSide = "leagueofcrafters.client.ClientProxy", serverSide = "leagueofcrafters.CommonProxy")
 	public static CommonProxy proxy;
+	public static File modDirectory;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(new DamageHandler());
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
+		modDirectory = new File(event.getModConfigurationDirectory().getParent());
+		NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
+
+		KeyBinding[] key = { new KeyBinding("League Items", Keyboard.KEY_F) };
+		boolean[] repeat = { false };
+		KeyBindingRegistry.registerKeyBinding(new LeagueKeyBind(key, repeat));
 
 	}
 
@@ -71,9 +81,33 @@ public class LeagueofCrafters {
 		cannon = (ItemCannon) new ItemCannon(5002).setMaxStackSize(1).setUnlocalizedName("Cannon").setCreativeTab(tabLeagueofCrafters);
 		LanguageRegistry.addName(cannon, "Cannon");
 
-		doransblade = (ItemDoransBlade) new ItemDoransBlade(5004, DORANS).setMaxStackSize(1).setUnlocalizedName("Doran's Blade")
+		blowdart = (ItemBlowdart) new ItemBlowdart(5003).setMaxStackSize(1).setUnlocalizedName("Blowdart").setCreativeTab(tabLeagueofCrafters);
+		LanguageRegistry.addName(blowdart, "Blowdart Gun");
+
+		doransblade = (ItemDoransBlade) new ItemDoransBlade(5004, League).setMaxStackSize(1).setUnlocalizedName("Doran's Blade")
 				.setCreativeTab(tabLeagueofCrafters);
 		LanguageRegistry.addName(doransblade, "Doran's Blade");
+
+		warmogs = (ItemLeagueArmor) new ItemLeagueArmor(5005, LeagueArmor, 5, 2, "warmogs").setMaxStackSize(1).setUnlocalizedName("Warmogs");
+		LanguageRegistry.addName(warmogs, "Warmog's Armor");
+
+		// doransshield = (ItemLeague) new ItemLeague(5005,
+		// "doransShield").setMaxStackSize(1).setUnlocalizedName("Doran's Shield")
+		// .setCreativeTab(tabLeagueofCrafters);
+		// LanguageRegistry.addName(doransshield, "Doran's Shield");
+
+		// /warmogs = (ItemLeague) new ItemLeague(5005, "warmogs",
+		// 10).setMaxStackSize(1).setUnlocalizedName("Warmogs").setCreativeTab(tabLeagueofCrafters);
+		// LanguageRegistry.addName(warmogs, "Warmogs Armor");
+
+		// frozenmallet = (ItemLeague) new ItemLeague(5006, "frozenmallet",
+		// 5).setMaxStackSize(1).setUnlocalizedName("frozenmallet")
+		// .setCreativeTab(tabLeagueofCrafters);
+		// LanguageRegistry.addName(frozenmallet, "frozenmallet");
+
+		// league = (ItemLeague) new ItemLeague(5007, "league",
+		// 0).setMaxStackSize(1).setUnlocalizedName("League").setCreativeTab(tabLeagueofCrafters);
+		// LanguageRegistry.addName(league, "League");
 
 		EntityRegistry.registerModEntity(EntityDart.class, "Dart", 1000, this, 80, 1, true);
 		EntityRegistry.registerGlobalEntityID(EntityTeemo.class, "Teemo", EntityRegistry.findGlobalUniqueEntityId(), 0x185100, 0xFFAE7C);
@@ -108,11 +142,11 @@ public class LeagueofCrafters {
 
 		EntityRegistry.registerModEntity(EntityKnife.class, "Knife", 1010, this, 80, 1, true);
 
+		MinecraftForge.EVENT_BUS.register(new EntityPlayerEvent());
 		proxy.registerRenderers();
 		proxy.registerSpawns();
 		proxy.registerSound();
 		LeagueRecipes.addRecipes();
-
 	}
 
 	@EventHandler

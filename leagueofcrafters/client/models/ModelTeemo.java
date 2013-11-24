@@ -287,16 +287,10 @@ public class ModelTeemo extends ModelBase {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, par6Entity);
 
 		this.HeadFull.rotateAngleY = (f3 / (180F / (float) Math.PI));
-		this.HeadFull.rotateAngleX = (f4 / (170F / (float) Math.PI));
 
-		this.LLegFull.rotateAngleX = MathHelper.cos(f * 0.6662F) * .26F * f1 * 0.5F;
-		this.LLegFull.rotateAngleY = 0.0f;
+		this.LLegFull.rotateAngleX = MathHelper.cos(f * 0.6662F) * .16F * f1 * 0.5F;
 
-		this.RLegFull.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * .26F * f1;
-		this.RLegFull.rotateAngleY = 0.0F;
-
-		this.LArm.rotateAngleX = MathHelper.cos((float) Math.PI) * .24F * f1;
-		this.RArmFull.rotateAngleX = MathHelper.cos(f * 0.6662F) * .24F * f1;
+		this.RLegFull.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * .16F * f1;
 
 	}
 }

@@ -1,6 +1,7 @@
 package leagueofcrafters.entity;
 
 import leagueofcrafters.LeagueofCrafters;
+import leagueofcrafters.handlers.RandomHelper;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -72,7 +73,7 @@ public class EntityTeemo extends EntityMob implements IRangedAttackMob {
 							+ (double) ((float) this.worldObj.difficultySetting * 0.11F));
 					this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
 					this.worldObj.spawnEntityInWorld(entityarrow);
-					timer = 300;
+					timer = 200;
 				}
 			}
 		} else
@@ -83,13 +84,14 @@ public class EntityTeemo extends EntityMob implements IRangedAttackMob {
 	// protected int getDropItemId() {
 	// return LeagueofCrafters.dart.itemID;
 	// }
-	protected void dropRareDrop(int par1) {
-		switch (this.rand.nextInt(3)) {
-		case 0:
-			this.dropItem(Block.mushroomBrown.blockID, 2);
-		case 3:
-			this.dropItem(Block.mushroomRed.blockID, 2);
-		}
+	@Override
+	protected void dropFewItems(boolean par1, int par2) {
+		super.dropFewItems(par1, par2);
+		int num = RandomHelper.getRandomNumberBetween(1, 11);
+		if (par1 && num == 9) {
+			this.dropItem(LeagueofCrafters.blowdart.itemID, 1);
+		} else if (par1 && num <= 7)
+			this.dropItem(LeagueofCrafters.dart.itemID, 2);
 	}
 
 	public void onLivingUpdate() {

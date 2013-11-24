@@ -143,12 +143,7 @@ public class ItemBlowdart extends Item {
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon("league:" + "blowdart_standby");
-		this.iconArray = new Icon[bowPullIconNameArray.length];
-
-		for (int i = 0; i < this.iconArray.length; ++i) {
-			this.iconArray[i] = par1IconRegister.registerIcon("league:" + "blowdart_" + bowPullIconNameArray[i]);
-		}
+		this.itemIcon = par1IconRegister.registerIcon("league:blowgun");
 	}
 
 	@SideOnly(Side.CLIENT)

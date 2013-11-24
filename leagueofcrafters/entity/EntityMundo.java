@@ -1,6 +1,6 @@
 package leagueofcrafters.entity;
 
-import leagueofcrafters.RandomHelper;
+import leagueofcrafters.handlers.RandomHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -9,6 +9,7 @@ import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.attributes.AttributeInstance;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -38,6 +39,8 @@ public class EntityMundo extends EntityMob implements IRangedAttackMob {
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.25D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(30);
+
 	}
 
 	@Override
@@ -53,7 +56,7 @@ public class EntityMundo extends EntityMob implements IRangedAttackMob {
 			// entityarrow.setDamage((double) (par2 * 2.0F) +
 			// this.rand.nextGaussian() * 0.15D);
 			this.worldObj.spawnEntityInWorld(entityarrow);
-			timer = 500;
+			timer = 200;
 		}
 	}
 

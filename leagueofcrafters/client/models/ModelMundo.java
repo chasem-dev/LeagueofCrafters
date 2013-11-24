@@ -195,17 +195,20 @@ public class ModelMundo extends ModelBase {
 		Needle.render(f5);
 		TestTube.render(f5);
 		Tongue.render(f5);
-		AxeHandle.render(f5);
-		Axeblade.render(f5);
 		RArm.render(f5);
 		RArm2.render(f5);
 		LeftLeg.render(f5);
 		RightLeg.render(f5);
-		if (entity.timer <= 75) {
-			AxeHandle.render(f5);
-			Axeblade.render(f5);
-		}
-		if (entity.timer <= 25 & entity.timer != 0) {
+		// if (entity.timer <= 75) {
+		AxeHandle.render(f5);
+		Axeblade.render(f5);
+		// }
+		this.armRotations(entity);
+
+	}
+
+	private void armRotations(EntityMundo entity) {
+		if (entity.timer <= 15 & entity.timer != 0) {
 			RArm2.setRotationPoint(-11F, -8F, 1.5F);
 			setRotation(RArm2, 3.141593F, 0.7807508F, 0.4833219F);
 			RArm.setRotationPoint(-5F, 0F, 0F);
@@ -220,13 +223,12 @@ public class ModelMundo extends ModelBase {
 			setRotation(RArm, -0.1858931F, 2.9557F, 0.8027482F);
 			RArm2.setRotationPoint(-13.6F, 0.5F, -0.8F);
 			setRotation(RArm2, -0.5762685F, -0.3346075F, 0.4833219F);
-			AxeHandle.setRotationPoint(-12F, 10F, -2F);
-			setRotation(AxeHandle, -0.2602503F, 1.635859F, -0.2974289F);
-			Axeblade.setRotationPoint(-14.5F, 5.2F, -11F);
-			setRotation(Axeblade, -0.2602503F, 1.635859F, -0.2974289F);
+			AxeHandle.setRotationPoint(-12F, 7F, -2F);
+			setRotation(AxeHandle, -0.2602503F, 2F, -0.2974289F);
+			Axeblade.setRotationPoint(-18.5F, 3F, -11F);
+			setRotation(Axeblade, -0.2602503F, 2F, -0.2974289F);
 
 		}
-
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
@@ -237,10 +239,10 @@ public class ModelMundo extends ModelBase {
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		this.LeftLeg.rotateAngleX = MathHelper.cos(f * 0.6662F) * .24F * f1 * 0.5F;
+		this.LeftLeg.rotateAngleX = MathHelper.cos(f * 0.6662F) * .4F * f1 * 0.5F;
 		this.LeftLeg.rotateAngleY = 0.0f;
 
-		this.RightLeg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * .24F * f1;
+		this.RightLeg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * .4F * f1;
 		this.RightLeg.rotateAngleY = 0.0F;
 
 	}
