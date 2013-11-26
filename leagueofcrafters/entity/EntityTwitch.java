@@ -219,9 +219,9 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 			float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
 
 			if (f1 >= 8.0F && !par1EntityLivingBase.isPotionActive(Potion.moveSlowdown)) {
-				entitypotion.setPotionDamage(32698);
+				entitypotion.setPotionDamage(10000);
 			} else if (par1EntityLivingBase.getHealth() >= 8.0F && !par1EntityLivingBase.isPotionActive(Potion.poison)) {
-				entitypotion.setPotionDamage(32660);
+				entitypotion.setPotionDamage(10000);
 			}
 
 			entitypotion.setThrowableHeading(d0, d1 + (double) (f1 * 0.2F), d2, 0.75F, 8.0F);

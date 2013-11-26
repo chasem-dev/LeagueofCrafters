@@ -1,8 +1,5 @@
 package leagueofcrafters.entity;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import java.util.List;
 
 import leagueofcrafters.LeagueofCrafters;
@@ -12,10 +9,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.item.Item;
+import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet70GameEvent;
@@ -23,13 +20,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityDart extends Entity implements IProjectile {
+public class EntityDart extends EntityThrowable implements IProjectile {
 	private int xTile = -1;
 	private int yTile = -1;
 	private int zTile = -1;
@@ -516,5 +514,17 @@ public class EntityDart extends Entity implements IProjectile {
 	public boolean getIsCritical() {
 		byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 		return (b0 & 1) != 0;
+	}
+
+	@Override
+	protected void onImpact(MovingObjectPosition movingobjectposition) {
+		if (movingobjectposition.entityHit != null)
+			if (movingobjectposition.entityHit instanceof EntityLivingBase || movingobjectposition.entityHit instanceof EntityMob) {
+				if (movingobjectposition.entityHit != this.shootingEntity) {
+					((EntityLivingBase) movingobjectposition.entityHit).addPotionEffect(new PotionEffect(Potion.poison.id, 100, 0));
+					((EntityLivingBase) movingobjectposition.entityHit).addPotionEffect(new PotionEffect(Potion.blindness.id, 75, 1));
+					this.setDead();
+				}
+			}
 	}
 }

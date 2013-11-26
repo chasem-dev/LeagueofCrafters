@@ -77,10 +77,6 @@ public class ModelBomb extends ModelBase {
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		((EntityBomb) entity).animationNum1 += .5F * f1;
-		if (((EntityBomb) entity).animationNum1 > 2 * 3.14159F)
-			((EntityBomb) entity).animationNum1 = 0;
-		Body.rotateAngleX = ((EntityBomb) entity).animationNum1;
 	}
 
 }

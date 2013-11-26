@@ -348,10 +348,10 @@ public class ModelTwitch extends ModelBase {
 
 		// /this.HeadFull.rotateAngleY = (f3 / (180F / (float) Math.PI));
 		// this.HeadFull.rotateAngleX = (f4 / (170F / (float) Math.PI));
-		this.FullLeftLeg.rotateAngleX = MathHelper.cos(f * 0.6662F) * .2F * f1 * 0.5F;
+		this.FullLeftLeg.rotateAngleX = MathHelper.cos(f * 0.6662F) * .3F * f1 * 0.5F;
 		this.FullLeftLeg.rotateAngleY = 0.0f;
 
-		this.FullRightLeg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * .2F * f1;
+		this.FullRightLeg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * .3F * f1;
 		this.FullRightLeg.rotateAngleY = 0.0F;
 
 		// //this.FullLeftArm.rotateAngleX = MathHelper.cos((float) Math.PI) *

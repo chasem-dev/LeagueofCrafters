@@ -105,7 +105,7 @@ public class ModelMundo extends ModelBase {
 		setRotation(Needle, -0.2230717F, 0.4833219F, 0.4461433F);
 		TestTube = new ModelRenderer(this, 38, 55);
 		TestTube.addBox(0F, 0F, 0F, 2, 7, 2);
-		TestTube.setRotationPoint(10F, 7F, -11F);
+		TestTube.setRotationPoint(7.8F, 9.2F, -9.2F);
 		TestTube.setTextureSize(128, 64);
 		TestTube.mirror = true;
 		setRotation(TestTube, 0.4089647F, 0F, -0.8179294F);
@@ -199,16 +199,17 @@ public class ModelMundo extends ModelBase {
 		RArm2.render(f5);
 		LeftLeg.render(f5);
 		RightLeg.render(f5);
-		// if (entity.timer <= 75) {
-		AxeHandle.render(f5);
-		Axeblade.render(f5);
-		// }
+		if (entity.timer <= 75) {
+			AxeHandle.render(f5);
+			Axeblade.render(f5);
+		}
 		this.armRotations(entity);
 
 	}
 
 	private void armRotations(EntityMundo entity) {
-		if (entity.timer <= 15 & entity.timer != 0) {
+
+		if (entity.timer <= 15) {
 			RArm2.setRotationPoint(-11F, -8F, 1.5F);
 			setRotation(RArm2, 3.141593F, 0.7807508F, 0.4833219F);
 			RArm.setRotationPoint(-5F, 0F, 0F);

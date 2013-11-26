@@ -36,16 +36,17 @@ public class LeagueofCrafters {
 	public static CreativeTabs tabLeagueofCrafters = new tabLeagueofCrafters(CreativeTabs.getNextID(), "League of Crafters");
 	public static ItemDoransBlade doransblade;
 	public static EnumToolMaterial League = EnumHelper.addToolMaterial("LeagueArmor", 2, 200, 6.5f, 2f, 14);
-	public static EnumArmorMaterial LeagueArmor = EnumHelper.addArmorMaterial("LeagueArmor", 15, new int[] { 2, 6, 5, 2 }, 9);
+	//public static EnumArmorMaterial LeagueArmor = EnumHelper.addArmorMaterial("LeagueArmor", 15, new int[] { 2, 6, 5, 2 }, 9);
 
 	public static ItemDart dart;
 	public static ItemBomb bomb;
 	public static ItemCannon cannon;
 	public static ItemBlowdart blowdart;
-	public static ItemMissle missle;
+	//public static ItemMissle missle;
 	// public static ItemLeague league;
-	public static ItemLeague doransshield;
-	public static ItemLeagueArmor warmogs;
+	//public static ItemLeague doransshield;
+	//public static ItemLeagueArmor warmogs;
+	//public static ItemLeagueArmor spiritVisage;
 	// public static ItemLeague frozenmallet;
 	private static int modGuiIndex = 0;
 	private static int modItemIndex = 7000;
@@ -88,8 +89,11 @@ public class LeagueofCrafters {
 				.setCreativeTab(tabLeagueofCrafters);
 		LanguageRegistry.addName(doransblade, "Doran's Blade");
 
-		warmogs = (ItemLeagueArmor) new ItemLeagueArmor(5005, LeagueArmor, 5, 2, "warmogs").setMaxStackSize(1).setUnlocalizedName("Warmogs");
-		LanguageRegistry.addName(warmogs, "Warmog's Armor");
+		//warmogs = (ItemLeagueArmor) new ItemLeagueArmor(5005, LeagueArmor, 5, 1, "warmogs", 10).setMaxStackSize(1).setUnlocalizedName("Warmogs");
+		//LanguageRegistry.addName(warmogs, "Warmog's Armor");
+
+		//spiritVisage = (ItemLeagueArmor) new ItemLeagueArmor(5006, LeagueArmor, 5, 1, "spiritVisage", 10).setMaxStackSize(1).setUnlocalizedName("spiritVisage");
+		//LanguageRegistry.addName(spiritVisage, "Spirit Visage");
 
 		// doransshield = (ItemLeague) new ItemLeague(5005,
 		// "doransShield").setMaxStackSize(1).setUnlocalizedName("Doran's Shield")

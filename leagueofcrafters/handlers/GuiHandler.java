@@ -19,7 +19,7 @@ public class GuiHandler implements IGuiHandler {
 		// Hooray, no 'magic' numbers - we know exactly which Gui this refers to
 		if (guiId == LeagueofCrafters.ItemInventoryGuiIndex) {
 			// Use the player's held item to create the inventory
-			return new ContainerLeague(player, player.inventory, new InventoryItem(player));
+			return new ContainerLeague(player, player.inventory, new InventoryItem());
 		}
 		return null;
 	}
@@ -29,7 +29,7 @@ public class GuiHandler implements IGuiHandler {
 		if (guiId == LeagueofCrafters.ItemInventoryGuiIndex) {
 			// We have to cast the new container as our custom class
 			// and pass in currently held item for the inventory
-			return new GuiLeague((ContainerLeague) new ContainerLeague(player, player.inventory, new InventoryItem(player)));
+			return new GuiLeague((ContainerLeague) new ContainerLeague(player, player.inventory, new InventoryItem()));
 		}
 		return null;
 	}

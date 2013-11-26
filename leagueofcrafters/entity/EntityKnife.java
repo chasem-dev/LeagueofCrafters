@@ -199,28 +199,24 @@ public class EntityKnife extends Entity implements IProjectile {
 			}
 		}
 
-		if (this.KnifeShake > 0) {
-			--this.KnifeShake;
-		}
-
 		if (this.inGround) {
-			int j = this.worldObj.getBlockId(this.xTile, this.yTile, this.zTile);
-			int k = this.worldObj.getBlockMetadata(this.xTile, this.yTile, this.zTile);
+		//	int j = this.worldObj.getBlockId(this.xTile, this.yTile, this.zTile);
+			//int k = this.worldObj.getBlockMetadata(this.xTile, this.yTile, this.zTile);
 
-			if (j == this.inTile && k == this.inData) {
-				++this.ticksInGround;
+		//	if (j == this.inTile && k == this.inData) {
+			//	++this.ticksInGround;
 
-				if (this.ticksInGround == 1200) {
-					this.setDead();
-				}
-			} else {
-				this.inGround = false;
-				this.motionX *= (double) (this.rand.nextFloat() * 0.2F);
-				this.motionY *= (double) (this.rand.nextFloat() * 0.2F);
-				this.motionZ *= (double) (this.rand.nextFloat() * 0.2F);
-				this.ticksInGround = 0;
-				this.ticksInAir = 0;
-			}
+			//	if (this.ticksInGround == 1200) {
+			//		this.setDead();
+				//}
+			//} else {
+				//this.inGround = false;
+			//	this.motionX *= (double) (this.rand.nextFloat() * 0.2F);
+			//	this.motionY *= (double) (this.rand.nextFloat() * 0.2F);
+			//	this.motionZ *= (double) (this.rand.nextFloat() * 0.2F);
+				//this.ticksInGround = 0;
+				//this.ticksInAir = 0;
+			//}
 		} else {
 			++this.ticksInAir;
 			Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ);
@@ -312,7 +308,6 @@ public class EntityKnife extends Entity implements IProjectile {
 							}
 						}
 
-						this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
 						if (!(movingobjectposition.entityHit instanceof EntityEnderman)) {
 							this.setDead();
@@ -338,7 +333,6 @@ public class EntityKnife extends Entity implements IProjectile {
 					this.posX -= this.motionX / (double) f2 * 0.05000000074505806D;
 					this.posY -= this.motionY / (double) f2 * 0.05000000074505806D;
 					this.posZ -= this.motionZ / (double) f2 * 0.05000000074505806D;
-					this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					this.inGround = true;
 					this.KnifeShake = 7;
 					this.setIsCritical(false);

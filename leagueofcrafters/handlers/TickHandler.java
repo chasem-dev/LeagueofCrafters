@@ -1,11 +1,15 @@
 package leagueofcrafters.handlers;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Map;
 
-import leagueofcrafters.*;
+import leagueofcrafters.LeagueSounds;
+import leagueofcrafters.LeagueofCrafters;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundPool;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.ITickHandler;
@@ -19,15 +23,51 @@ public class TickHandler implements ITickHandler {
 	boolean screenOpen = false;
 	public static Item item;
 	public static EntityPlayer player2;
-
 	public int HEALTH = 20;
+	public HashMap<String, Integer> useMap2 = new HashMap<String, Integer>();
 
 	private void onPlayerTick(EntityPlayer player) {
-		// if(player.inventory)
-		if (LeagueKeyBind.keyPressed) {
-			player.openGui(LeagueofCrafters.instance, 0, player.worldObj, 0, 0, 0);
+			if (((EntityPlayer) player).inventory.hasItem(LeagueofCrafters.doransblade.itemID)) {
+				((EntityLivingBase) player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(22.0D);
+			} else {
+				((EntityLivingBase) player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
+			}
 
-		}
+		/**
+		 * if (LeagueKeyBind.keyPressed) {
+		 * player.openGui(LeagueofCrafters.instance, 0, player.worldObj, 0, 0,
+		 * 0);
+		 * 
+		 * }
+		 * 
+		 * Item item = null; int maxHealth = 20;
+		 * 
+		 * if (useMap2.get(player.username) == null) {
+		 * useMap2.put(player.username, 0); } if
+		 * (player.inventory.armorItemInSlot(1) != null) { item =
+		 * player.inventory.armorItemInSlot(1).getItem();
+		 * 
+		 * } else if (player.inventory.armorItemInSlot(2) != null) { item =
+		 * player.inventory.armorItemInSlot(2).getItem(); if (item instanceof
+		 * ItemLeagueArmor) { if (item.itemID ==
+		 * LeagueofCrafters.warmogs.itemID) { maxHealth += ((ItemLeagueArmor)
+		 * item).healthBoost; } else if (item.itemID ==
+		 * LeagueofCrafters.spiritVisage.itemID) { maxHealth +=
+		 * ((ItemLeagueArmor) item).healthBoost; } } } else if
+		 * (player.inventory.armorItemInSlot(3) != null) { item =
+		 * player.inventory.armorItemInSlot(3).getItem();
+		 * 
+		 * } else if (player.inventory.armorItemInSlot(0) != null) { item =
+		 * player.inventory.armorItemInSlot(0).getItem();
+		 * 
+		 * } else {
+		 * player.getEntityAttribute(SharedMonsterAttributes.maxHealth).
+		 * setAttribute(20); }
+		 * player.getEntityAttribute(SharedMonsterAttributes.
+		 * maxHealth).setAttribute(maxHealth);
+		 * 
+		 * }
+		 **/
 	}
 
 	@Override

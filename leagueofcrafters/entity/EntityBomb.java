@@ -510,12 +510,20 @@ public class EntityBomb extends EntityThrowable implements IProjectile {
 	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
 		if (this.inGround) {
-			this.worldObj.createExplosion(this, this.posX, this.posY + 0.5F, this.posZ, 0.75F, true);
+			this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 0.75F, true);
 			this.setDead();
 			// } else if (this.entity != null) {
 			// this.worldObj.createExplosion(this, this.posX, this.posY + 0.5F,
 			// this.posZ, 0.75F, true);
 			// this.setDead();
 		}
+		if (movingobjectposition.entityHit != null)
+			if (movingobjectposition.entityHit instanceof EntityLivingBase) {
+				if (movingobjectposition.entityHit != this.shootingEntity) {
+					this.worldObj.createExplosion(this, movingobjectposition.entityHit.posX, movingobjectposition.entityHit.posY + 0.2F,
+							movingobjectposition.entityHit.posZ, 0.75F, true);
+					this.setDead();
+				}
+			}
 	}
 }

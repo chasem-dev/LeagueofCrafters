@@ -1,90 +1,163 @@
 package leagueofcrafters.inventory;
 
+import leagueofcrafters.items.ItemLeague;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public class InventoryItem extends InventoryPlayer {
+public class InventoryItem implements IInventory
 
-	public InventoryItem(EntityPlayer par1EntityPlayer) {
-		super(par1EntityPlayer);
-		this.mainInventory = new ItemStack[43];
-	}
-
-	@Override
-	public void readFromNBT(NBTTagList items) {
-		// Gets the custom taglist we wrote to this compound, if any
-
-		for (int i = 0; i < items.tagCount(); ++i) {
-			NBTTagCompound item = (NBTTagCompound) items.tagAt(i);
-			int slot = item.getInteger("Slot");
-
-			// Just double-checking that the saved slot index is within our
-			// inventory array bounds
-			if (slot >= 0 && slot < InventoryItem.getInvSize()) {
-				setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
-			}
-		}
-	}
+{
+	/** The name for your custom inventory, possibly just "Inventory" */
+	private final String name = "Custom Inventory";
 
 	/**
-	 * A custom method to write our inventory to an ItemStack's NBT compound
-	 * 
-	 * @return
+	 * In case your inventory name is too generic, define a name to store the
+	 * NBT tag in as well
 	 */
-	@Override
-	public NBTTagList writeToNBT(NBTTagList items) {
-		// Create a new NBT Tag List to store itemstacks as NBT Tags
+	private final String tagName = "CustomInvTag";
 
-		for (int i = 0; i < InventoryItem.getInvSize(); ++i) {
-			// Only write stacks that contain items
-			if (getStackInSlot(i) != null) {
-				// Make a new NBT Tag Compound to write the itemstack and slot
-				// index to
-				NBTTagCompound item = new NBTTagCompound();
-				item.setInteger("Slot", i);
-				// Writes the itemstack in slot(i) to the Tag Compound we just
-				// made
-				getStackInSlot(i).writeToNBT(item);
+	/** Define the inventory size here for easy reference */
+	// This is also the place to define which slot is which if you have
+	// different types,
+	// for example SLOT_SHIELD = 0, SLOT_AMULET = 1;
+	public static final int INV_SIZE = 2;
 
-				// add the tag compound to our tag list
-				items.appendTag(item);
-			}
-		}
-		// if (heldItem != null && heldItem.itemID == Item.arrow.itemID) {
-		// player.capabilities.allowFlying = true;
-		// } else {
-		// player.capabilities.allowFlying = player.capabilities.isCreativeMode
-		// ? true : false;
-		// }
-		return items;
-	}
+	/**
+	 * Inventory's size must be same as number of slots you add to the Container
+	 * class
+	 */
+	ItemStack[] inventory = new ItemStack[INV_SIZE];
 
-	@Override
-	public ItemStack getStackInSlot(int par1) {
-		ItemStack[] aitemstack = this.mainInventory;
-
-		if (par1 >= aitemstack.length) {
-			par1 -= aitemstack.length;
-			aitemstack = this.armorInventory;
-		}
-
-		return aitemstack[par1];
+	public InventoryItem() {
+		// don't need anything here!
 	}
 
 	@Override
 	public int getSizeInventory() {
-		return this.getInvSize();
+		return inventory.length;
 	}
 
-	public static int getInvSize() {
-		return 42;
+	@Override
+	public ItemStack getStackInSlot(int slot) {
+		return inventory[slot];
+	}
+
+	@Override
+	public ItemStack decrStackSize(int slot, int amount) {
+		ItemStack stack = getStackInSlot(slot);
+		if (stack != null) {
+			if (stack.stackSize > amount) {
+				stack = stack.splitStack(amount);
+				this.onInventoryChanged();
+			} else {
+				setInventorySlotContents(slot, null);
+			}
+		}
+		return stack;
+	}
+
+	@Override
+	public ItemStack getStackInSlotOnClosing(int slot) {
+		ItemStack stack = getStackInSlot(slot);
+		setInventorySlotContents(slot, null);
+		return stack;
+	}
+
+	@Override
+	public void setInventorySlotContents(int slot, ItemStack itemstack) {
+		this.inventory[slot] = itemstack;
+
+		if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit()) {
+			itemstack.stackSize = this.getInventoryStackLimit();
+		}
+
+		this.onInventoryChanged();
 	}
 
 	@Override
 	public String getInvName() {
-		return "League Items";
+		return name;
+	}
+
+	@Override
+	public boolean isInvNameLocalized() {
+		return name.length() > 0;
+	}
+
+	/**
+	 * Our custom slots are similar to armor - only one item per slot
+	 */
+	@Override
+	public int getInventoryStackLimit() {
+		return 1;
+	}
+
+	@Override
+	public void onInventoryChanged() {
+		for (int i = 0; i < this.getSizeInventory(); ++i) {
+			if (this.getStackInSlot(i) != null && this.getStackInSlot(i).stackSize == 0)
+				this.setInventorySlotContents(i, null);
+		}
+	}
+
+	@Override
+	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+		return true;
+	}
+
+	@Override
+	public void openChest() {
+	}
+
+	@Override
+	public void closeChest() {
+	}
+
+	/**
+	 * This method doesn't seem to do what it claims to do, as items can still
+	 * be left-clicked and placed in the inventory even when this returns false
+	 */
+	@Override
+	public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
+		// If you have different kinds of slots, then check them here:
+		// if (slot == SLOT_SHIELD && itemstack.getItem() instanceof ItemShield)
+		// return true;
+
+		// For now, only ItemUseMana items can be stored in these slots
+		return itemstack.getItem() instanceof ItemLeague;
+	}
+
+	public void writeToNBT(NBTTagCompound tagcompound) {
+		NBTTagList items = new NBTTagList();
+
+		for (int i = 0; i < getSizeInventory(); ++i) {
+			if (getStackInSlot(i) != null) {
+				NBTTagCompound item = new NBTTagCompound();
+				item.setByte("Slot", (byte) i);
+				getStackInSlot(i).writeToNBT(item);
+				items.appendTag(item);
+			}
+		}
+
+		// We're storing our items in a custom tag list using our 'tagName' from
+		// above
+		// to prevent potential conflict
+		tagcompound.setTag(tagName, items);
+	}
+
+	public void readFromNBT(NBTTagCompound tagcompound) {
+		NBTTagList items = tagcompound.getTagList(tagName);
+
+		for (int i = 0; i < items.tagCount(); ++i) {
+			NBTTagCompound item = (NBTTagCompound) items.tagAt(i);
+			byte slot = item.getByte("Slot");
+
+			if (slot >= 0 && slot < getSizeInventory()) {
+				setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
+			}
+		}
 	}
 }
