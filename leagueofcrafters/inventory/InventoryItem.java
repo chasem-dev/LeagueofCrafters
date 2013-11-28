@@ -1,7 +1,9 @@
 package leagueofcrafters.inventory;
 
+import leagueofcrafters.entity.ExtendedPlayer;
 import leagueofcrafters.items.ItemLeague;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,20 +13,19 @@ public class InventoryItem implements IInventory
 
 {
 	/** The name for your custom inventory, possibly just "Inventory" */
-	private final String name = "Custom Inventory";
+	private final String name = "League Inventory";
 
 	/**
 	 * In case your inventory name is too generic, define a name to store the
 	 * NBT tag in as well
 	 */
-	private final String tagName = "CustomInvTag";
+	private final String tagName = "LeagueSlot";
 
 	/** Define the inventory size here for easy reference */
 	// This is also the place to define which slot is which if you have
 	// different types,
 	// for example SLOT_SHIELD = 0, SLOT_AMULET = 1;
-	public static final int INV_SIZE = 2;
-
+	public static final int INV_SIZE = 15;
 	/**
 	 * Inventory's size must be same as number of slots you add to the Container
 	 * class
@@ -37,11 +38,17 @@ public class InventoryItem implements IInventory
 
 	@Override
 	public int getSizeInventory() {
-		return inventory.length;
+		return this.INV_SIZE;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int slot) {
+		if (slot > 14)
+			slot = 14;
+		ItemStack item = inventory[slot];
+		ExtendedPlayer.inventory = this;
+		// if(item != null)
+		// System.out.println(item.getDisplayName());
 		return inventory[slot];
 	}
 
@@ -68,13 +75,14 @@ public class InventoryItem implements IInventory
 
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack itemstack) {
-		this.inventory[slot] = itemstack;
+		if (slot < 15) {
+			inventory[slot] = itemstack;
 
-		if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit()) {
-			itemstack.stackSize = this.getInventoryStackLimit();
+			if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit())
+				itemstack.stackSize = this.getInventoryStackLimit();
+
+			this.onInventoryChanged();
 		}
-
-		this.onInventoryChanged();
 	}
 
 	@Override
@@ -92,12 +100,12 @@ public class InventoryItem implements IInventory
 	 */
 	@Override
 	public int getInventoryStackLimit() {
-		return 1;
+		return 64;
 	}
 
 	@Override
 	public void onInventoryChanged() {
-		for (int i = 0; i < this.getSizeInventory(); ++i) {
+		for (int i = 9; i < 15; ++i) {
 			if (this.getStackInSlot(i) != null && this.getStackInSlot(i).stackSize == 0)
 				this.setInventorySlotContents(i, null);
 		}
@@ -122,21 +130,17 @@ public class InventoryItem implements IInventory
 	 */
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
-		// If you have different kinds of slots, then check them here:
-		// if (slot == SLOT_SHIELD && itemstack.getItem() instanceof ItemShield)
-		// return true;
-
-		// For now, only ItemUseMana items can be stored in these slots
-		return itemstack.getItem() instanceof ItemLeague;
+		return true;
 	}
 
 	public void writeToNBT(NBTTagCompound tagcompound) {
 		NBTTagList items = new NBTTagList();
-
-		for (int i = 0; i < getSizeInventory(); ++i) {
+		if (this.inventory != null)
+			ExtendedPlayer.inventory = this;
+		for (int i = 9; i < 15; ++i) {
 			if (getStackInSlot(i) != null) {
 				NBTTagCompound item = new NBTTagCompound();
-				item.setByte("Slot", (byte) i);
+				item.setByte("LeagueSlots", (byte) i);
 				getStackInSlot(i).writeToNBT(item);
 				items.appendTag(item);
 			}
@@ -146,17 +150,20 @@ public class InventoryItem implements IInventory
 		// above
 		// to prevent potential conflict
 		tagcompound.setTag(tagName, items);
+		this.readFromNBT(tagcompound);
 	}
 
 	public void readFromNBT(NBTTagCompound tagcompound) {
-		NBTTagList items = tagcompound.getTagList(tagName);
 
-		for (int i = 0; i < items.tagCount(); ++i) {
-			NBTTagCompound item = (NBTTagCompound) items.tagAt(i);
-			byte slot = item.getByte("Slot");
+		if (tagcompound != null) {
+			NBTTagList items = tagcompound.getTagList(tagName);
+			for (int i = 0; i < items.tagCount(); ++i) {
+				NBTTagCompound item = (NBTTagCompound) items.tagAt(i);
+				byte slot = item.getByte("LeagueSlots");
 
-			if (slot >= 0 && slot < getSizeInventory()) {
-				setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
+				if (slot < 15) {
+					setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
+				}
 			}
 		}
 	}

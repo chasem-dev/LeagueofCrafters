@@ -6,6 +6,7 @@ import java.util.Map;
 
 import leagueofcrafters.LeagueSounds;
 import leagueofcrafters.LeagueofCrafters;
+import leagueofcrafters.client.gui.GuiLeague;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundPool;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,18 +28,21 @@ public class TickHandler implements ITickHandler {
 	public HashMap<String, Integer> useMap2 = new HashMap<String, Integer>();
 
 	private void onPlayerTick(EntityPlayer player) {
-			if (((EntityPlayer) player).inventory.hasItem(LeagueofCrafters.doransblade.itemID)) {
-				((EntityLivingBase) player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(22.0D);
-			} else {
-				((EntityLivingBase) player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
+		if (((EntityPlayer) player).inventory.hasItem(LeagueofCrafters.doransblade.itemID)) {
+			((EntityLivingBase) player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(22.0D);
+		} else {
+			((EntityLivingBase) player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
+		}
+		if (LeagueKeyBind.keyPressed) {
+			if (!(Minecraft.getMinecraft().currentScreen instanceof GuiLeague))
+				player.openGui(LeagueofCrafters.instance, 0, player.worldObj, 0, 0, 0);
+			else {
+				player.closeScreen();
 			}
+		}
 
+		// }
 		/**
-		 * if (LeagueKeyBind.keyPressed) {
-		 * player.openGui(LeagueofCrafters.instance, 0, player.worldObj, 0, 0,
-		 * 0);
-		 * 
-		 * }
 		 * 
 		 * Item item = null; int maxHealth = 20;
 		 * 

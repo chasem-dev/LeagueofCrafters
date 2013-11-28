@@ -20,6 +20,6 @@ public class SlotLeague extends Slot {
 	@Override
 	public boolean isItemValid(ItemStack itemstack) {
 		// Everything returns true except an instance of our Item
-		return !(itemstack.getItem() instanceof ItemLeague);
+		return true;
 	}
 }

@@ -19,7 +19,6 @@ public class ContainerLeague extends Container {
 	 * slots we made? We can just use InventoryItem.INV_SIZE and if we ever
 	 * change it, the Container updates automatically.
 	 */
-	private static final int INV_START = 6, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1, HOTBAR_END = HOTBAR_START + 8;
 
 	// If you're planning to add armor slots, put those first like this:
 	// ARMOR_START = InventoryItem.INV_SIZE, ARMOR_END = ARMOR_START+3,
@@ -29,7 +28,7 @@ public class ContainerLeague extends Container {
 		this.inventory = inventoryItem;
 
 		for (int j = 0; j < 6; j++) {
-			addSlotToContainer(new Slot(inventoryItem, j + 3 * 3, 35 + j * 18, (1 * 18) + 2));
+			addSlotToContainer(new SlotLeague(inventoryItem, j + 3 * 3, 35 + j * 18, (1 * 18) + 2));
 		}
 		bindPlayerInventory(inventoryPlayer);
 	}
