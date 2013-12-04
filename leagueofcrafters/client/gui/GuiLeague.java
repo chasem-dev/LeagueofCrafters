@@ -1,7 +1,7 @@
 package leagueofcrafters.client.gui;
 
 import leagueofcrafters.inventory.ContainerLeague;
-import leagueofcrafters.inventory.InventoryItem;
+import leagueofcrafters.inventory.LeagueInventory;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
@@ -33,7 +33,7 @@ public class GuiLeague extends GuiContainer {
 	private static final ResourceLocation iconLocation = new ResourceLocation("league:gui/LoL.png");
 
 	/** The inventory to render on screen */
-	private final InventoryItem inventory;
+	private final LeagueInventory inventory;
 
 	public GuiLeague(ContainerLeague containerItem) {
 		super(containerItem);

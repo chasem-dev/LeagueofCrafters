@@ -3,7 +3,7 @@ package leagueofcrafters.handlers;
 import leagueofcrafters.LeagueofCrafters;
 import leagueofcrafters.client.gui.GuiLeague;
 import leagueofcrafters.inventory.ContainerLeague;
-import leagueofcrafters.inventory.InventoryItem;
+import leagueofcrafters.inventory.LeagueInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -19,7 +19,7 @@ public class GuiHandler implements IGuiHandler {
 		// Hooray, no 'magic' numbers - we know exactly which Gui this refers to
 		if (guiId == LeagueofCrafters.ItemInventoryGuiIndex) {
 			// Use the player's held item to create the inventory
-			return new ContainerLeague(player, player.inventory, new InventoryItem());
+			return new ContainerLeague(player, player.inventory, new LeagueInventory());
 		}
 		return null;
 	}
@@ -29,7 +29,7 @@ public class GuiHandler implements IGuiHandler {
 		if (guiId == LeagueofCrafters.ItemInventoryGuiIndex) {
 			// We have to cast the new container as our custom class
 			// and pass in currently held item for the inventory
-			return new GuiLeague((ContainerLeague) new ContainerLeague(player, player.inventory, new InventoryItem()));
+			return new GuiLeague((ContainerLeague) new ContainerLeague(player, player.inventory, new LeagueInventory()));
 		}
 		return null;
 	}

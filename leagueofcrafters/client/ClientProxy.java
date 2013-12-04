@@ -1,20 +1,13 @@
 package leagueofcrafters.client;
 
 import leagueofcrafters.CommonProxy;
-import leagueofcrafters.LeagueofCrafters;
+import leagueofcrafters.client.models.*;
 import leagueofcrafters.client.renderer.*;
 import leagueofcrafters.entity.*;
+import leagueofcrafters.entity.projectiles.*;
 import leagueofcrafters.handlers.SoundEvent;
-import leagueofcrafters.items.ItemBomb;
-import leagueofcrafters.client.models.*;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.entity.RenderEntity;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderSnowball;
-import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -35,7 +28,9 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTristana.class, new RenderTristana(new ModelTristana(), 0.5F, 1.2F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAnnie.class, new RenderAnnie(new ModelAnnie(), 0.5F, 1.2F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMundo.class, new RenderMundo(new ModelMundo(), 0.5F));
-
+		RenderingRegistry.registerEntityRenderingHandler(EntityMinion.class, new RenderMinion(new ModelMinion(), (float) 0.5, 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityKogmaw.class, new RenderKogmaw(new ModelKogmaw(), (float) 1, 0.65F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityPukeball.class, new RenderPukeball(Item.slimeBall));
 	}
 
 	@Override
@@ -62,6 +57,12 @@ public class ClientProxy extends CommonProxy {
 
 		EntityRegistry.addSpawn(EntityMundo.class, 10000, 1, 1, EnumCreatureType.creature, BiomeGenBase.desertHills, BiomeGenBase.extremeHills,
 				BiomeGenBase.taigaHills, BiomeGenBase.plains, BiomeGenBase.jungleHills, BiomeGenBase.forestHills);
+
+		EntityRegistry.addSpawn(EntityKogmaw.class, 15000, 1, 1, EnumCreatureType.creature, BiomeGenBase.swampland, BiomeGenBase.plains);
+
+		EntityRegistry.addSpawn(EntityMinion.class, 5000, 1, 1, EnumCreatureType.creature, BiomeGenBase.desert, BiomeGenBase.extremeHills,
+				BiomeGenBase.forest, BiomeGenBase.jungle, BiomeGenBase.taiga, BiomeGenBase.swampland, BiomeGenBase.plains,
+				BiomeGenBase.beach);
 
 	}
 }

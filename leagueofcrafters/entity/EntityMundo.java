@@ -1,5 +1,6 @@
 package leagueofcrafters.entity;
 
+import leagueofcrafters.entity.projectiles.EntityKnife;
 import leagueofcrafters.handlers.RandomHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
@@ -56,7 +57,7 @@ public class EntityMundo extends EntityMob implements IRangedAttackMob {
 			// entityarrow.setDamage((double) (par2 * 2.0F) +
 			// this.rand.nextGaussian() * 0.15D);
 			this.worldObj.spawnEntityInWorld(entityarrow);
-			timer = 200;
+			timer = 50;
 		}
 	}
 

@@ -3,7 +3,7 @@ package leagueofcrafters.client.renderer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import leagueofcrafters.entity.EntityBomb;
+import leagueofcrafters.entity.projectiles.EntityBomb;
 import leagueofcrafters.client.models.ModelBomb;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelWitch;

@@ -2,12 +2,15 @@ package leagueofcrafters;
 
 import java.io.File;
 
+import leagueofcrafters.blocks.*;
 import leagueofcrafters.entity.*;
+import leagueofcrafters.entity.projectiles.*;
 import leagueofcrafters.handlers.*;
 import leagueofcrafters.items.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,6 +28,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -44,15 +48,10 @@ public class LeagueofCrafters {
 	public static ItemBomb bomb;
 	public static ItemCannon cannon;
 	public static ItemBlowdart blowdart;
-	// public static ItemMissle missle;
-	// public static ItemLeague league;
-	// public static ItemLeague doransshield;
-	// public static ItemLeagueArmor warmogs;
-	// public static ItemLeagueArmor spiritVisage;
-	// public static ItemLeague frozenmallet;
 	private static int modGuiIndex = 0;
 	private static int modItemIndex = 7000;
 	public static final int ItemInventoryGuiIndex = modGuiIndex++;
+	public static Block nexus;
 
 	@Instance(value = "LoC")
 	public static LeagueofCrafters instance;
@@ -67,10 +66,13 @@ public class LeagueofCrafters {
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		modDirectory = new File(event.getModConfigurationDirectory().getParent());
 		NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
-
+		GameRegistry.registerTileEntity(TileEntityNexus.class, "Nexus");
 		KeyBinding[] key = { new KeyBinding("League Items", Keyboard.KEY_F) };
 		boolean[] repeat = { false };
 		KeyBindingRegistry.registerKeyBinding(new LeagueKeyBind(key, repeat));
+
+		nexus = new BlockNexus(500, Material.rock).setHardness(0.5F).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("nexus")
+				.setCreativeTab(tabLeagueofCrafters);
 
 	}
 
@@ -90,33 +92,6 @@ public class LeagueofCrafters {
 		doransblade = (ItemDoransBlade) new ItemDoransBlade(5004, League).setMaxStackSize(1).setUnlocalizedName("Doran's Blade")
 				.setCreativeTab(tabLeagueofCrafters);
 		LanguageRegistry.addName(doransblade, "Doran's Blade");
-
-		// warmogs = (ItemLeagueArmor) new ItemLeagueArmor(5005, LeagueArmor, 5,
-		// 1, "warmogs", 10).setMaxStackSize(1).setUnlocalizedName("Warmogs");
-		// LanguageRegistry.addName(warmogs, "Warmog's Armor");
-
-		// spiritVisage = (ItemLeagueArmor) new ItemLeagueArmor(5006,
-		// LeagueArmor, 5, 1, "spiritVisage",
-		// 10).setMaxStackSize(1).setUnlocalizedName("spiritVisage");
-		// LanguageRegistry.addName(spiritVisage, "Spirit Visage");
-
-		// doransshield = (ItemLeague) new ItemLeague(5005,
-		// "doransShield").setMaxStackSize(1).setUnlocalizedName("Doran's Shield")
-		// .setCreativeTab(tabLeagueofCrafters);
-		// LanguageRegistry.addName(doransshield, "Doran's Shield");
-
-		// /warmogs = (ItemLeague) new ItemLeague(5005, "warmogs",
-		// 10).setMaxStackSize(1).setUnlocalizedName("Warmogs").setCreativeTab(tabLeagueofCrafters);
-		// LanguageRegistry.addName(warmogs, "Warmogs Armor");
-
-		// frozenmallet = (ItemLeague) new ItemLeague(5006, "frozenmallet",
-		// 5).setMaxStackSize(1).setUnlocalizedName("frozenmallet")
-		// .setCreativeTab(tabLeagueofCrafters);
-		// LanguageRegistry.addName(frozenmallet, "frozenmallet");
-
-		// league = (ItemLeague) new ItemLeague(5007, "league",
-		// 0).setMaxStackSize(1).setUnlocalizedName("League").setCreativeTab(tabLeagueofCrafters);
-		// LanguageRegistry.addName(league, "League");
 
 		EntityRegistry.registerModEntity(EntityDart.class, "Dart", 1000, this, 80, 1, true);
 		EntityRegistry.registerGlobalEntityID(EntityTeemo.class, "Teemo", EntityRegistry.findGlobalUniqueEntityId(), 0x185100, 0xFFAE7C);
@@ -151,7 +126,21 @@ public class LeagueofCrafters {
 
 		EntityRegistry.registerModEntity(EntityKnife.class, "Knife", 1010, this, 80, 1, true);
 
-		MinecraftForge.EVENT_BUS.register(new EntityPlayerEvent());
+		EntityRegistry.registerGlobalEntityID(EntityMinion.class, "Minion", EntityRegistry.findGlobalUniqueEntityId(), 0xB2B2E5, 0xF29498);
+		EntityRegistry.registerModEntity(EntityMinion.class, "Minion", 1011, this, 80, 1, true);
+		LanguageRegistry.instance().addStringLocalization("entity.Minion.name", "en_US", "Minion");
+
+		EntityRegistry.registerGlobalEntityID(EntityKogmaw.class, "Kogmaw", EntityRegistry.findGlobalUniqueEntityId(), 0xB3BBF2, 0x5FF04F);
+		EntityRegistry.registerModEntity(EntityKogmaw.class, "Kogmaw", 1012, this, 80, 1, true);
+		LanguageRegistry.instance().addStringLocalization("entity.Kogmaw.name", "en_US", "Kogmaw");
+
+		LanguageRegistry.instance().addStringLocalization("tile.nexus.name", "en_US", "Nexus Block");
+		GameRegistry.registerBlock(nexus, "Nexus");
+
+		EntityRegistry.registerModEntity(EntityPukeball.class, "Pukeball", 1013, this, 80, 1, true);
+
+		
+		MinecraftForge.EVENT_BUS.register(new leagueofcrafters.handlers.EventHandler());
 		proxy.registerRenderers();
 		proxy.registerSpawns();
 		proxy.registerSound();

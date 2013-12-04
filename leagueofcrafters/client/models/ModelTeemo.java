@@ -130,7 +130,7 @@ public class ModelTeemo extends ModelBase {
 		setRotation(RArm, 0.3915114F, 0F, 0.669215F);
 		Blowgun = new ModelRenderer(this, 20, 0);
 		Blowgun.addBox(0F, 0F, 0F, 1, 6, 1);
-		Blowgun.setRotationPoint(-2F, 17F, -6F);
+		Blowgun.setRotationPoint(-2F, 17F, -5.45F);
 		Blowgun.setTextureSize(64, 32);
 		Blowgun.mirror = true;
 		setRotation(Blowgun, 0.5063936F, -0.3717861F, 0.06F);
@@ -264,6 +264,8 @@ public class ModelTeemo extends ModelBase {
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+
+		
 		Neck.render(f5);
 		Body.render(f5);
 		RLegFull.render(f5);

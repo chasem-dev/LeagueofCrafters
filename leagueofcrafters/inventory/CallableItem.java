@@ -8,9 +8,9 @@ import net.minecraft.item.ItemStack;
 class CallableItem implements Callable {
 	final ItemStack theItemStack;
 
-	final InventoryItem playerInventory;
+	final LeagueInventory playerInventory;
 
-	CallableItem(InventoryItem par1InventoryPlayer, ItemStack par2ItemStack) {
+	CallableItem(LeagueInventory par1InventoryPlayer, ItemStack par2ItemStack) {
 		this.playerInventory = par1InventoryPlayer;
 		this.theItemStack = par2ItemStack;
 	}

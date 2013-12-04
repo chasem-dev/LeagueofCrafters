@@ -1,7 +1,7 @@
 package leagueofcrafters.client.renderer;
 
 import leagueofcrafters.LeagueofCrafters;
-import leagueofcrafters.entity.EntityFire;
+import leagueofcrafters.entity.projectiles.EntityFire;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureMap;

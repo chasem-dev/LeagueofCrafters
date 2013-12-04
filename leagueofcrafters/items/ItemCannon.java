@@ -1,7 +1,7 @@
 package leagueofcrafters.items;
 
 import leagueofcrafters.LeagueofCrafters;
-import leagueofcrafters.entity.EntityBomb;
+import leagueofcrafters.entity.projectiles.EntityBomb;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.entity.EntityClientPlayerMP;

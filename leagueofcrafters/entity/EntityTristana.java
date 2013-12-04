@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import leagueofcrafters.LeagueofCrafters;
+import leagueofcrafters.entity.projectiles.EntityTristanaBomb;
 import leagueofcrafters.handlers.RandomHelper;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -71,11 +72,11 @@ public class EntityTristana extends EntityMob implements IRangedAttackMob {
 		if (timer <= 0) {
 			EntityTristanaBomb entityarrow = new EntityTristanaBomb(this.worldObj, this, par1EntityLivingBase, 1.6F,
 					(float) (14 - this.worldObj.difficultySetting * 4));
-			entityarrow.setPosition(this.posX, this.posY, this.posZ);
+			entityarrow.setPosition(this.posX, this.posY + 1.6F, this.posZ);
 			// entityarrow.setDamage((double) (par2 * 2.0F) +
 			// this.rand.nextGaussian() * 0.15D);
 			this.worldObj.spawnEntityInWorld(entityarrow);
-			timer = 200;
+			timer = 50;
 		}
 	}
 

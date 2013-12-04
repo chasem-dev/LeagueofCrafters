@@ -68,13 +68,13 @@ public class ModelMundo extends ModelBase {
 
 		LArm = new ModelRenderer(this, 19, 49);
 		LArm.addBox(0F, 0F, 0F, 4, 11, 4);
-		LArm.setRotationPoint(3F, -4.5F, -0.5F);
+		LArm.setRotationPoint(3F, -4.5F, -2F);
 		LArm.setTextureSize(128, 64);
 		LArm.mirror = true;
-		setRotation(LArm, -0.4833219F, -0.4089647F, -0.7435722F);
+		setRotation(LArm, -0.27F, 0.28F, -0.8F);
 		LArm2 = new ModelRenderer(this, 7, 51);
 		LArm2.addBox(0F, 0F, 0F, 3, 10, 3);
-		LArm2.setRotationPoint(10.2F, -0.2F, -4F);
+		LArm2.setRotationPoint(10.2F, 0.5F, -4.6F);
 		LArm2.setTextureSize(128, 64);
 		LArm2.mirror = true;
 		setRotation(LArm2, -0.4658687F, -0.1115358F, 0.1115358F);
@@ -185,6 +185,7 @@ public class ModelMundo extends ModelBase {
 
 	private void renderMundo(EntityMundo entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+
 		Body.render(f5);
 		Body2.render(f5);
 		Head.render(f5);

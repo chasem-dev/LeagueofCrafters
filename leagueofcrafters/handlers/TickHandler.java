@@ -33,13 +33,13 @@ public class TickHandler implements ITickHandler {
 		} else {
 			((EntityLivingBase) player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
 		}
-		if (LeagueKeyBind.keyPressed) {
-			if (!(Minecraft.getMinecraft().currentScreen instanceof GuiLeague))
-				player.openGui(LeagueofCrafters.instance, 0, player.worldObj, 0, 0, 0);
-			else {
-				player.closeScreen();
-			}
-		}
+		//if (LeagueKeyBind.keyPressed) {
+		//	if (!(Minecraft.getMinecraft().currentScreen instanceof GuiLeague))
+			//	player.openGui(LeagueofCrafters.instance, 0, player.worldObj, 0, 0, 0);
+			//else {
+			//	player.closeScreen();
+			//}
+		//}
 
 		// }
 		/**

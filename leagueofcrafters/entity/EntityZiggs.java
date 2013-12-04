@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import leagueofcrafters.LeagueofCrafters;
+import leagueofcrafters.entity.projectiles.EntityBomb;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -71,7 +72,7 @@ public class EntityZiggs extends EntityMob implements IRangedAttackMob {
 			EntityBomb entityarrow = new EntityBomb(this.worldObj, this, par1EntityLivingBase, 1.6F, (float) (14 - this.worldObj.difficultySetting * 4));
 			entityarrow.setPosition(this.posX, this.posY, this.posZ);
 			this.worldObj.spawnEntityInWorld(entityarrow);
-			timer = 200;
+			timer = 50;
 		}
 	}
 

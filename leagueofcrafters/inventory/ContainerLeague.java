@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerLeague extends Container {
 	/** The Item Inventory for this Container */
-	public final InventoryItem inventory;
+	public final LeagueInventory inventory;
 
 	/**
 	 * Using these will make transferStackInSlot easier to understand and
@@ -24,7 +24,7 @@ public class ContainerLeague extends Container {
 	// ARMOR_START = InventoryItem.INV_SIZE, ARMOR_END = ARMOR_START+3,
 	// INV_START = ARMOR_END+1, and then carry on like above.
 
-	public ContainerLeague(EntityPlayer par1Player, InventoryPlayer inventoryPlayer, InventoryItem inventoryItem) {
+	public ContainerLeague(EntityPlayer par1Player, InventoryPlayer inventoryPlayer, LeagueInventory inventoryItem) {
 		this.inventory = inventoryItem;
 
 		for (int j = 0; j < 6; j++) {

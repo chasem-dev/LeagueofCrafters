@@ -14,12 +14,8 @@ public class LeagueRecipes {
 		GameRegistry.addRecipe(new ItemStack(LeagueofCrafters.doransblade, 1), new Object[] { "  I", "AI ", "SA ", Character.valueOf('I'),
 				new ItemStack(Item.ingotIron), Character.valueOf('A'), new ItemStack(Item.ingotGold), Character.valueOf('S'), new ItemStack(Item.stick) });
 
-		// GameRegistry.addRecipe(new ItemStack(LeagueofCrafters.league, 1),
-		// new Object[] { "LSL", "GDG", "LLL", Character.valueOf('L'), new
-		// ItemStack(Item.leather), Character.valueOf('S'), new
-		// ItemStack(Item.silk),
-		// Character.valueOf('G'), new ItemStack(Item.ingotGold),
-		// Character.valueOf('D'), new ItemStack(Item.diamond) });
+		GameRegistry.addRecipe(new ItemStack(LeagueofCrafters.nexus, 1), new Object[] { "SDS", "SRS", "SSS", Character.valueOf('S'),
+				new ItemStack(Block.stoneBrick), Character.valueOf('D'), new ItemStack(Block.blockDiamond), Character.valueOf('R'), new ItemStack(Block.blockRedstone) });
 
 	}
 }

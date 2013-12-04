@@ -1,7 +1,7 @@
 package leagueofcrafters.items;
 
 import leagueofcrafters.LeagueofCrafters;
-import leagueofcrafters.entity.EntityDart;
+import leagueofcrafters.entity.projectiles.EntityDart;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;

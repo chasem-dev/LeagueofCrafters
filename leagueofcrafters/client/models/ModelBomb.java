@@ -1,6 +1,6 @@
 package leagueofcrafters.client.models;
 
-import leagueofcrafters.entity.EntityBomb;
+import leagueofcrafters.entity.projectiles.EntityBomb;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;

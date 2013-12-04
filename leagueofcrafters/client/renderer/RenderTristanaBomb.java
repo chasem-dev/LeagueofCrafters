@@ -3,8 +3,7 @@ package leagueofcrafters.client.renderer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import leagueofcrafters.entity.EntityTristanaBomb;
-import leagueofcrafters.entity.EntityTristanaBomb;
+import leagueofcrafters.entity.projectiles.EntityTristanaBomb;
 import leagueofcrafters.client.models.ModelTristanaBomb;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelWitch;
