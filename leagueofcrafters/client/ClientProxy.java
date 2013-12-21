@@ -1,12 +1,14 @@
 package leagueofcrafters.client;
 
 import leagueofcrafters.CommonProxy;
+import leagueofcrafters.blocks.TileEntityNexus;
 import leagueofcrafters.client.models.*;
 import leagueofcrafters.client.renderer.*;
 import leagueofcrafters.entity.*;
 import leagueofcrafters.entity.projectiles.*;
 import leagueofcrafters.handlers.SoundEvent;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.item.Item;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,6 +33,8 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityMinion.class, new RenderMinion(new ModelMinion(), (float) 0.5, 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityKogmaw.class, new RenderKogmaw(new ModelKogmaw(), (float) 1, 0.65F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPukeball.class, new RenderPukeball(Item.slimeBall));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTurretBeam.class, new RenderPukeball(Item.netherStar));
+
 	}
 
 	@Override
@@ -60,9 +64,8 @@ public class ClientProxy extends CommonProxy {
 
 		EntityRegistry.addSpawn(EntityKogmaw.class, 15000, 1, 1, EnumCreatureType.creature, BiomeGenBase.swampland, BiomeGenBase.plains);
 
-		EntityRegistry.addSpawn(EntityMinion.class, 5000, 1, 1, EnumCreatureType.creature, BiomeGenBase.desert, BiomeGenBase.extremeHills,
-				BiomeGenBase.forest, BiomeGenBase.jungle, BiomeGenBase.taiga, BiomeGenBase.swampland, BiomeGenBase.plains,
-				BiomeGenBase.beach);
+		EntityRegistry.addSpawn(EntityMinion.class, 5000, 1, 1, EnumCreatureType.creature, BiomeGenBase.desert, BiomeGenBase.extremeHills, BiomeGenBase.forest,
+				BiomeGenBase.jungle, BiomeGenBase.taiga, BiomeGenBase.swampland, BiomeGenBase.plains, BiomeGenBase.beach);
 
 	}
 }

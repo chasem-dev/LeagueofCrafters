@@ -10,6 +10,8 @@ import java.util.Random;
 import java.util.UUID;
 
 import leagueofcrafters.client.ParticleEffects;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -24,6 +26,7 @@ import net.minecraft.entity.ai.attributes.AttributeInstance;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,6 +45,7 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 	private static final int[] TwitchDrops = new int[] { Item.glowstone.itemID, Item.sugar.itemID, Item.redstone.itemID, Item.spiderEye.itemID,
 			Item.glassBottle.itemID, Item.gunpowder.itemID, Item.stick.itemID, Item.stick.itemID };
 	private int timer;
+	private int potiontimer;
 
 	/**
 	 * Timer used as interval for a Twitch's attack, decremented every tick if
@@ -104,8 +108,10 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 	 * sunlight and start to burn.
 	 */
 	public void onLivingUpdate() {
-		//ParticleEffects.spawnParticle("fly", (double) this.posX - .1, (double) this.posY + 1.1D, (double) this.posZ + .1, -1, Color.BLACK.getGreen(), Color.BLACK.getBlue());
-		
+		// ParticleEffects.spawnParticle("fly", (double) this.posX - .1,
+		// (double) this.posY + 1.1D, (double) this.posZ + .1, -1,
+		// Color.BLACK.getGreen(), Color.BLACK.getBlue());
+
 		if (!this.worldObj.isRemote) {
 			ItemStack itemstack = this.getHeldItem();
 			this.setCurrentItemOrArmor(0, (ItemStack) null);
@@ -150,7 +156,10 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 		if (this.rand.nextFloat() < 7.5E-4F) {
 			this.worldObj.setEntityState(this, (byte) 15);
 		}
-		timer--;
+		if (timer != 0)
+			timer--;
+		if (potiontimer != 0)
+			potiontimer--;
 		super.onLivingUpdate();
 	}
 
@@ -211,22 +220,30 @@ public class EntityTwitch extends EntityMob implements IRangedAttackMob {
 	 */
 	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2) {
 		if (timer <= 0) {
-			EntityPotion entitypotion = new EntityPotion(this.worldObj, this, 32732);
-			entitypotion.rotationPitch -= -20.0F;
-			double d0 = par1EntityLivingBase.posX + par1EntityLivingBase.motionX - this.posX;
-			double d1 = par1EntityLivingBase.posY + (double) par1EntityLivingBase.getEyeHeight() - 1.100000023841858D - this.posY;
-			double d2 = par1EntityLivingBase.posZ + par1EntityLivingBase.motionZ - this.posZ;
-			float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+			if (potiontimer == 0) {
+				EntityPotion entitypotion = new EntityPotion(this.worldObj, this, 32732);
+				entitypotion.rotationPitch -= -20.0F;
+				double d0 = par1EntityLivingBase.posX + par1EntityLivingBase.motionX - this.posX;
+				double d1 = par1EntityLivingBase.posY + (double) par1EntityLivingBase.getEyeHeight() - 1.100000023841858D - this.posY;
+				double d2 = par1EntityLivingBase.posZ + par1EntityLivingBase.motionZ - this.posZ;
+				float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
 
-			if (f1 >= 8.0F && !par1EntityLivingBase.isPotionActive(Potion.moveSlowdown)) {
-				entitypotion.setPotionDamage(10000);
-			} else if (par1EntityLivingBase.getHealth() >= 8.0F && !par1EntityLivingBase.isPotionActive(Potion.poison)) {
-				entitypotion.setPotionDamage(10000);
+				if (par1EntityLivingBase.getHealth() >= 8.0F && !par1EntityLivingBase.isPotionActive(Potion.poison)) {
+					entitypotion.setPotionDamage(32660);
+				}
+
+				entitypotion.setThrowableHeading(d0, d1 + (double) (f1 * 0.2F), d2, 0.75F, 8.0F);
+				this.worldObj.spawnEntityInWorld(entitypotion);
+				timer = 50;
+				potiontimer = 500;
+			} else {
+				EntityArrow entityarrow = new EntityArrow(this.worldObj, this, par1EntityLivingBase, 1.6F, (float) (14 - this.worldObj.difficultySetting * 4));
+				entityarrow.setDamage(2);
+				entityarrow.setPosition(this.posX, this.posY + 1, this.posZ);
+				this.worldObj.spawnEntityInWorld(entityarrow);
+				timer = 50;
+
 			}
-
-			entitypotion.setThrowableHeading(d0, d1 + (double) (f1 * 0.2F), d2, 0.75F, 8.0F);
-			this.worldObj.spawnEntityInWorld(entitypotion);
-			timer = 50;
 		}
 	}
 }

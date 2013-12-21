@@ -1,11 +1,8 @@
 package leagueofcrafters.items;
 
-import leagueofcrafters.LeagueofCrafters;
+import leagueofcrafters.LeagueItems;
 import leagueofcrafters.entity.projectiles.EntityBomb;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -21,6 +18,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemCannon extends Item {
 	public static final String[] cannonPullIconNameArray = new String[] { "0", "1", "2", "3" };
@@ -52,7 +51,7 @@ public class ItemCannon extends Item {
 
 		boolean flag = par3EntityPlayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, par1ItemStack) > 0;
 
-		if (flag || par3EntityPlayer.inventory.hasItem(LeagueofCrafters.bomb.itemID)) {
+		if (flag || par3EntityPlayer.inventory.hasItem(LeagueItems.bomb.itemID)) {
 			float f = (float) j / 20.0F;
 			f = (f * f + f * 2.0F) / 3.0F;
 
@@ -92,7 +91,7 @@ public class ItemCannon extends Item {
 			if (flag) {
 				entityBomb.canBePickedUp = 2;
 			} else {
-				par3EntityPlayer.inventory.consumeInventoryItem(LeagueofCrafters.bomb.itemID);
+				par3EntityPlayer.inventory.consumeInventoryItem(LeagueItems.bomb.itemID);
 			}
 
 			if (!par2World.isRemote) {
@@ -132,7 +131,7 @@ public class ItemCannon extends Item {
 			return event.result;
 		}
 
-		if (par3EntityPlayer.capabilities.isCreativeMode || par3EntityPlayer.inventory.hasItem(LeagueofCrafters.bomb.itemID)) {
+		if (par3EntityPlayer.capabilities.isCreativeMode || par3EntityPlayer.inventory.hasItem(LeagueItems.bomb.itemID)) {
 			par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
 			// itemInUseCount = this.getMaxItemUseDuration(par1ItemStack);
 		}

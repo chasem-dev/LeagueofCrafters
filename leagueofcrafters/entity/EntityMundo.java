@@ -1,5 +1,6 @@
 package leagueofcrafters.entity;
 
+import leagueofcrafters.LeagueItems;
 import leagueofcrafters.entity.projectiles.EntityKnife;
 import leagueofcrafters.handlers.RandomHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -89,8 +90,12 @@ public class EntityMundo extends EntityMob implements IRangedAttackMob {
 	@Override
 	protected int getDropItemId() {
 		int num = RandomHelper.getRandomNumberBetween(1, 6);
+		int num2 = RandomHelper.getRandomNumberBetween(1, 100);
+
 		if (num == 2)
 			return Item.appleRed.itemID;
+		else if (num == 52)
+			return LeagueItems.warmogs.itemID;
 		else
 			return Item.rottenFlesh.itemID;
 	}

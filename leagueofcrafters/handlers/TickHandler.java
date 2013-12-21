@@ -4,12 +4,13 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.text.JTextComponent.KeyBinding;
+
+import leagueofcrafters.LeagueItems;
 import leagueofcrafters.LeagueSounds;
 import leagueofcrafters.LeagueofCrafters;
-import leagueofcrafters.client.gui.GuiLeague;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundPool;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -28,51 +29,76 @@ public class TickHandler implements ITickHandler {
 	public HashMap<String, Integer> useMap2 = new HashMap<String, Integer>();
 
 	private void onPlayerTick(EntityPlayer player) {
-		if (((EntityPlayer) player).inventory.hasItem(LeagueofCrafters.doransblade.itemID)) {
-			((EntityLivingBase) player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(22.0D);
+		HEALTH = 20;
+		if (((EntityPlayer) player).inventory.hasItem(LeagueItems.doransblade.itemID)) {
+			// ((EntityLivingBase)
+			// player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(22);
+			if (HEALTH != 22 || HEALTH == 30)
+				HEALTH += 2;
 		} else {
-			((EntityLivingBase) player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
+			if (HEALTH != 20 || HEALTH == 22 || HEALTH == 32)
+				HEALTH -= 2;
 		}
-		//if (LeagueKeyBind.keyPressed) {
-		//	if (!(Minecraft.getMinecraft().currentScreen instanceof GuiLeague))
-			//	player.openGui(LeagueofCrafters.instance, 0, player.worldObj, 0, 0, 0);
-			//else {
-			//	player.closeScreen();
-			//}
-		//}
-
-		// }
-		/**
-		 * 
-		 * Item item = null; int maxHealth = 20;
-		 * 
-		 * if (useMap2.get(player.username) == null) {
-		 * useMap2.put(player.username, 0); } if
-		 * (player.inventory.armorItemInSlot(1) != null) { item =
-		 * player.inventory.armorItemInSlot(1).getItem();
-		 * 
-		 * } else if (player.inventory.armorItemInSlot(2) != null) { item =
-		 * player.inventory.armorItemInSlot(2).getItem(); if (item instanceof
-		 * ItemLeagueArmor) { if (item.itemID ==
-		 * LeagueofCrafters.warmogs.itemID) { maxHealth += ((ItemLeagueArmor)
-		 * item).healthBoost; } else if (item.itemID ==
-		 * LeagueofCrafters.spiritVisage.itemID) { maxHealth +=
-		 * ((ItemLeagueArmor) item).healthBoost; } } } else if
-		 * (player.inventory.armorItemInSlot(3) != null) { item =
-		 * player.inventory.armorItemInSlot(3).getItem();
-		 * 
-		 * } else if (player.inventory.armorItemInSlot(0) != null) { item =
-		 * player.inventory.armorItemInSlot(0).getItem();
-		 * 
-		 * } else {
-		 * player.getEntityAttribute(SharedMonsterAttributes.maxHealth).
-		 * setAttribute(20); }
-		 * player.getEntityAttribute(SharedMonsterAttributes.
-		 * maxHealth).setAttribute(maxHealth);
-		 * 
-		 * }
-		 **/
+		if (player.inventory.armorInventory[2] != null)
+			if (player.inventory.armorInventory[2].getItem().itemID == LeagueItems.warmogs.itemID) {
+				if (HEALTH != 30 || HEALTH != 32)
+					HEALTH += 10;
+				// ((EntityLivingBase)
+				// player).getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(30);
+			} else {
+				if (HEALTH == 30 || HEALTH == 32)
+					HEALTH -= 10;
+			}
+		// if (HEALTH != 0)
+		player.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(HEALTH);
+		if (LeagueKeyBind.key[0].pressed) {
+			if (LeagueKeyBind.key[0] != null)
+				if (!player.worldObj.isRemote)
+					System.out.println("Spell 1");
+		}
+		if (LeagueKeyBind.key[1].pressed) {
+			if (LeagueKeyBind.key[1] != null)
+				if (!player.worldObj.isRemote)
+					System.out.println("Spell 2");
+		}
 	}
+
+	// if (LeagueKeyBind.keyPressed) {
+	// if (!(Minecraft.getMinecraft().currentScreen instanceof GuiLeague))
+	// player.openGui(LeagueofCrafters.instance, 0, player.worldObj, 0, 0,
+	// 0);
+	// else {
+	// player.closeScreen();
+	// }
+	// }
+	// }
+
+	/**
+	 * 
+	 * Item item = null; int maxHealth = 20;
+	 * 
+	 * if (useMap2.get(player.username) == null) { useMap2.put(player.username,
+	 * 0); } if (player.inventory.armorItemInSlot(1) != null) { item =
+	 * player.inventory.armorItemInSlot(1).getItem();
+	 * 
+	 * } else if (player.inventory.armorItemInSlot(2) != null) { item =
+	 * player.inventory.armorItemInSlot(2).getItem(); if (item instanceof
+	 * ItemLeagueArmor) { if (item.itemID == LeagueofCrafters.warmogs.itemID) {
+	 * maxHealth += ((ItemLeagueArmor) item).healthBoost; } else if (item.itemID
+	 * == LeagueofCrafters.spiritVisage.itemID) { maxHealth +=
+	 * ((ItemLeagueArmor) item).healthBoost; } } } else if
+	 * (player.inventory.armorItemInSlot(3) != null) { item =
+	 * player.inventory.armorItemInSlot(3).getItem();
+	 * 
+	 * } else if (player.inventory.armorItemInSlot(0) != null) { item =
+	 * player.inventory.armorItemInSlot(0).getItem();
+	 * 
+	 * } else { player.getEntityAttribute(SharedMonsterAttributes.maxHealth).
+	 * setAttribute(20); } player.getEntityAttribute(SharedMonsterAttributes.
+	 * maxHealth).setAttribute(maxHealth);
+	 * 
+	 * }
+	 **/
 
 	@Override
 	public void tickStart(EnumSet<TickType> types, Object... tickData) {

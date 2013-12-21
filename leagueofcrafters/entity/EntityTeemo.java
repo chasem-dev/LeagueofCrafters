@@ -1,6 +1,6 @@
 package leagueofcrafters.entity;
 
-import leagueofcrafters.LeagueofCrafters;
+import leagueofcrafters.LeagueItems;
 import leagueofcrafters.entity.projectiles.EntityDart;
 import leagueofcrafters.handlers.RandomHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -95,9 +95,9 @@ public class EntityTeemo extends EntityMob implements IRangedAttackMob {
 		super.dropFewItems(par1, par2);
 		int num = RandomHelper.getRandomNumberBetween(1, 11);
 		if (par1 && num == 9) {
-			this.dropItem(LeagueofCrafters.blowdart.itemID, 1);
+			this.dropItem(LeagueItems.blowdart.itemID, 1);
 		} else if (par1 && num <= 7)
-			this.dropItem(LeagueofCrafters.dart.itemID, 2);
+			this.dropItem(LeagueItems.dart.itemID, 2);
 	}
 
 	public void onLivingUpdate() {

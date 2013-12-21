@@ -14,7 +14,7 @@ public class tabLeagueofCrafters extends CreativeTabs {
 
 	@SideOnly(Side.CLIENT)
 	public ItemStack getIconItemStack() {
-		return new ItemStack(LeagueofCrafters.bomb.itemID, 1, 0);
+		return new ItemStack(LeagueItems.bomb.itemID, 1, 0);
 	}
 
 	public String getTranslatedTabLabel() {

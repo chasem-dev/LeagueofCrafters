@@ -1,39 +1,19 @@
 package leagueofcrafters.entity;
 
-import java.util.Iterator;
-import java.util.List;
-
-import leagueofcrafters.LeagueofCrafters;
+import leagueofcrafters.LeagueItems;
 import leagueofcrafters.entity.projectiles.EntityTristanaBomb;
 import leagueofcrafters.handlers.RandomHelper;
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIArrowAttack;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIFleeSun;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAIRestrictSun;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.AttributeInstance;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemPotion;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class EntityTristana extends EntityMob implements IRangedAttackMob {
@@ -109,7 +89,7 @@ public class EntityTristana extends EntityMob implements IRangedAttackMob {
 	protected int getDropItemId() {
 	int num = RandomHelper.getRandomNumberBetween(1, 6);
 		if (num == 2)
-			return LeagueofCrafters.cannon.itemID;
+			return LeagueItems.cannon.itemID;
 		else
 			return Item.rottenFlesh.itemID;
 	}

@@ -1,9 +1,7 @@
 package leagueofcrafters.items;
 
-import leagueofcrafters.LeagueofCrafters;
+import leagueofcrafters.LeagueItems;
 import leagueofcrafters.entity.projectiles.EntityDart;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -17,6 +15,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBlowdart extends Item {
 	public static final String[] bowPullIconNameArray = new String[] { "pulling_0", "pulling_1", "pulling_2" };
@@ -46,7 +46,7 @@ public class ItemBlowdart extends Item {
 
 		boolean flag = par3EntityPlayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, par1ItemStack) > 0;
 
-		if (flag || par3EntityPlayer.inventory.hasItem(LeagueofCrafters.dart.itemID)) {
+		if (flag || par3EntityPlayer.inventory.hasItem(LeagueItems.dart.itemID)) {
 			float f = (float) j / 20.0F;
 			f = (f * f + f * 2.0F) / 3.0F;
 
@@ -86,7 +86,7 @@ public class ItemBlowdart extends Item {
 			if (flag) {
 				EntityDart.canBePickedUp = 2;
 			} else {
-				par3EntityPlayer.inventory.consumeInventoryItem(LeagueofCrafters.dart.itemID);
+				par3EntityPlayer.inventory.consumeInventoryItem(LeagueItems.dart.itemID);
 			}
 
 			if (!par2World.isRemote) {
@@ -126,7 +126,7 @@ public class ItemBlowdart extends Item {
 			return event.result;
 		}
 
-		if (par3EntityPlayer.capabilities.isCreativeMode || par3EntityPlayer.inventory.hasItem(LeagueofCrafters.dart.itemID)) {
+		if (par3EntityPlayer.capabilities.isCreativeMode || par3EntityPlayer.inventory.hasItem(LeagueItems.dart.itemID)) {
 			par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
 		}
 
