@@ -3,23 +3,18 @@ package leagueofcrafters;
 import java.io.File;
 
 import leagueofcrafters.blocks.TileEntityNexus;
-import leagueofcrafters.client.renderer.TileEntityNexusRender;
 import leagueofcrafters.handlers.DamageHandler;
 import leagueofcrafters.handlers.GuiHandler;
 import leagueofcrafters.handlers.LeagueKeyBind;
 import leagueofcrafters.handlers.PacketHandler;
 import leagueofcrafters.handlers.TickHandler;
-import net.minecraft.client.settings.KeyBinding;
+import leagueofcrafters.world.BerryGen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
-
-import org.lwjgl.input.Keyboard;
-
-import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -47,7 +42,7 @@ public class LeagueofCrafters {
 	private static int modItemIndex = 7000;
 	// public static WorldType leagueWorld = new LeagueWorldType(15,
 	// "LeagueWorld");
-
+	public static BerryGen worldGen = new BerryGen();
 	@Instance(value = "LoC")
 	public static LeagueofCrafters instance;
 
@@ -80,6 +75,7 @@ public class LeagueofCrafters {
 		new LeagueChampions();
 		MinecraftForge.EVENT_BUS.register(new leagueofcrafters.handlers.EventHandler());
 		GameRegistry.registerBlock(LeagueItems.nexus, "Nexus");
+		GameRegistry.registerBlock(LeagueItems.freljordCrop, "Freljord Crop");
 		// GameRegistry.registerBlock(LeagueItems.tower, "Tower Block");
 		// ClientRegistry.bindTileEntitySpecialRenderer(TileEntityNexus.class,
 		// new TileEntityNexusRender());
@@ -87,6 +83,7 @@ public class LeagueofCrafters {
 		proxy.registerSpawns();
 		proxy.registerSound();
 		LeagueRecipes.addRecipes();
+		GameRegistry.registerWorldGenerator(worldGen);
 	}
 
 	@EventHandler

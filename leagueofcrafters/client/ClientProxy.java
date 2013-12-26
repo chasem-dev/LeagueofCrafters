@@ -1,14 +1,56 @@
 package leagueofcrafters.client;
 
 import leagueofcrafters.CommonProxy;
-import leagueofcrafters.blocks.TileEntityNexus;
-import leagueofcrafters.client.models.*;
-import leagueofcrafters.client.renderer.*;
-import leagueofcrafters.entity.*;
-import leagueofcrafters.entity.projectiles.*;
+import leagueofcrafters.client.models.ModelAnnie;
+import leagueofcrafters.client.models.ModelBomb;
+import leagueofcrafters.client.models.ModelKnife;
+import leagueofcrafters.client.models.ModelKogmaw;
+import leagueofcrafters.client.models.ModelMinion;
+import leagueofcrafters.client.models.ModelMundo;
+import leagueofcrafters.client.models.ModelNunu;
+import leagueofcrafters.client.models.ModelTeemo;
+import leagueofcrafters.client.models.ModelTristana;
+import leagueofcrafters.client.models.ModelTristanaBomb;
+import leagueofcrafters.client.models.ModelTwitch;
+import leagueofcrafters.client.models.ModelZiggs;
+import leagueofcrafters.client.renderer.RenderAnnie;
+import leagueofcrafters.client.renderer.RenderBomb;
+import leagueofcrafters.client.renderer.RenderChampion;
+import leagueofcrafters.client.renderer.RenderDart;
+import leagueofcrafters.client.renderer.RenderFire;
+import leagueofcrafters.client.renderer.RenderFrozenArrow;
+import leagueofcrafters.client.renderer.RenderKnife;
+import leagueofcrafters.client.renderer.RenderKogmaw;
+import leagueofcrafters.client.renderer.RenderLizard;
+import leagueofcrafters.client.renderer.RenderMinion;
+import leagueofcrafters.client.renderer.RenderMundo;
+import leagueofcrafters.client.renderer.RenderPukeball;
+import leagueofcrafters.client.renderer.RenderTeemo;
+import leagueofcrafters.client.renderer.RenderTristana;
+import leagueofcrafters.client.renderer.RenderTristanaBomb;
+import leagueofcrafters.client.renderer.RenderTwitch;
+import leagueofcrafters.client.renderer.RenderZiggs;
+import leagueofcrafters.entity.EntityAnnie;
+import leagueofcrafters.entity.EntityKogmaw;
+import leagueofcrafters.entity.EntityLizard;
+import leagueofcrafters.entity.EntityMinion;
+import leagueofcrafters.entity.EntityMundo;
+import leagueofcrafters.entity.EntityNuNu;
+import leagueofcrafters.entity.EntityTeemo;
+import leagueofcrafters.entity.EntityTristana;
+import leagueofcrafters.entity.EntityTwitch;
+import leagueofcrafters.entity.EntityZiggs;
+import leagueofcrafters.entity.projectiles.EntityBomb;
+import leagueofcrafters.entity.projectiles.EntityDart;
+import leagueofcrafters.entity.projectiles.EntityFire;
+import leagueofcrafters.entity.projectiles.EntityFrozenArrow;
+import leagueofcrafters.entity.projectiles.EntityKnife;
+import leagueofcrafters.entity.projectiles.EntityPukeball;
+import leagueofcrafters.entity.projectiles.EntitySnowball;
+import leagueofcrafters.entity.projectiles.EntityTristanaBomb;
 import leagueofcrafters.handlers.SoundEvent;
+import net.minecraft.client.model.ModelZombie;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.item.Item;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,7 +75,10 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityMinion.class, new RenderMinion(new ModelMinion(), (float) 0.5, 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityKogmaw.class, new RenderKogmaw(new ModelKogmaw(), (float) 1, 0.65F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPukeball.class, new RenderPukeball(Item.slimeBall));
-		RenderingRegistry.registerEntityRenderingHandler(EntityTurretBeam.class, new RenderPukeball(Item.netherStar));
+		RenderingRegistry.registerEntityRenderingHandler(EntityLizard.class, new RenderLizard(new ModelZombie(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntityNuNu.class, new RenderChampion(new ModelNunu(), 1, "nunu"));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySnowball.class, new RenderPukeball(Item.snowball));
+		RenderingRegistry.registerEntityRenderingHandler(EntityFrozenArrow.class, new RenderFrozenArrow());
 
 	}
 
@@ -66,6 +111,9 @@ public class ClientProxy extends CommonProxy {
 
 		EntityRegistry.addSpawn(EntityMinion.class, 5000, 1, 1, EnumCreatureType.creature, BiomeGenBase.desert, BiomeGenBase.extremeHills, BiomeGenBase.forest,
 				BiomeGenBase.jungle, BiomeGenBase.taiga, BiomeGenBase.swampland, BiomeGenBase.plains, BiomeGenBase.beach);
+
+		EntityRegistry.addSpawn(EntityNuNu.class, 5000, 1, 1, EnumCreatureType.creature, BiomeGenBase.taiga, BiomeGenBase.taigaHills, BiomeGenBase.frozenOcean,
+				BiomeGenBase.frozenRiver, BiomeGenBase.icePlains, BiomeGenBase.iceMountains);
 
 	}
 }

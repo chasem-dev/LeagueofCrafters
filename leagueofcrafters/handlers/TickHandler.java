@@ -29,6 +29,7 @@ public class TickHandler implements ITickHandler {
 	public HashMap<String, Integer> useMap2 = new HashMap<String, Integer>();
 
 	private void onPlayerTick(EntityPlayer player) {
+		//player.getFoodStats().setFoodLevel(2);
 		HEALTH = 20;
 		if (((EntityPlayer) player).inventory.hasItem(LeagueItems.doransblade.itemID)) {
 			// ((EntityLivingBase)

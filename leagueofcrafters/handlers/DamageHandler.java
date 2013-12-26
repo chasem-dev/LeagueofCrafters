@@ -1,5 +1,6 @@
 package leagueofcrafters.handlers;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -10,6 +11,7 @@ public class DamageHandler {
 	public static float currentHealth;
 	public static float damageDealt;
 	public static String entityName;
+	public static Entity attacker;
 
 	@ForgeSubscribe
 	public void DamageCheck(LivingHurtEvent event) {
@@ -23,6 +25,7 @@ public class DamageHandler {
 				entityName = living.getTranslatedEntityName();
 				damageDealt = event.ammount;
 				currentHealth = living.getHealth();
+				attacker = event.source.getEntity();
 				entityName2 = living.getTranslatedEntityName();
 				damageDealt2 = living.getMaxHealth() - event.ammount;
 				currentHealth2 = living.getHealth() - event.ammount;
