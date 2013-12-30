@@ -7,25 +7,13 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class EntityLizard extends EntityMob {
+public class EntityLizard extends EntityMeleeChampion {
 
 	public static int timer;
 
 	public EntityLizard(World par1World) {
-		super(par1World);
-	}
-
-	@Override
-	public boolean isAIEnabled() {
-		return true;
-	}
-
-	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(10.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.8D);
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(3.0D);
+		super(par1World, name);
+		this.name = "lizard";
 	}
 
 	public void onLivingUpdate() {

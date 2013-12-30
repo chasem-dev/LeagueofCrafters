@@ -26,21 +26,20 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityNuNu extends EntityMob implements IRangedAttackMob {
+public class EntityMeleeChampion extends EntityMob {
 
-	public static int timer;
+	public static String name;
 
-	public EntityNuNu(World par1World) {
+	public EntityMeleeChampion(World par1World, String name) {
 		super(par1World);
 		this.setSize(2, 4);
 		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, false));
 		this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 1.0D));
 		this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
-		this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 5, 10.0F));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityMinion.class, 0, true));
-
+		this.name = name;
 	}
 
 	@Override
@@ -56,16 +55,6 @@ public class EntityNuNu extends EntityMob implements IRangedAttackMob {
 
 	@Override
 	public void onLivingUpdate() {
-		if (!this.worldObj.isRemote && this.timer > 0) {
-			timer--;
-		}
-		if (this.timer == 0) {
-			this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 5, 10.0F));
-			EntityPlayer entityplayer = this.worldObj.getClosestVulnerablePlayerToEntity(this, 16.0D);
-			if (entityplayer != null)
-				this.attackEntityWithRangedAttack(entityplayer, 1);
-
-		}
 		super.onLivingUpdate();
 	}
 
@@ -78,40 +67,13 @@ public class EntityNuNu extends EntityMob implements IRangedAttackMob {
 	}
 
 	@Override
-	public void attackEntityWithRangedAttack(EntityLivingBase entitylivingbase, float f) {
-		if (timer == 0) {
-			EntitySnowball entityPukeball = new EntitySnowball(this.worldObj, this);
-			double d0 = entitylivingbase.posX - this.posX;
-			double d1 = entitylivingbase.posY + (double) entitylivingbase.getEyeHeight() - entityPukeball.posY - 2;
-			double d2 = entitylivingbase.posZ - this.posZ;
-			float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2) * 0.2F;
-			entityPukeball.setThrowableHeading(d0, d1 + (double) f1, d2, 1.6F, 12.0F);
-			this.worldObj.spawnEntityInWorld(entityPukeball);
-
-			timer = 250;
-
-		} else {
-			// PathPoint[] point = new PathPoint[(int) entitylivingbase.posX];
-			// this.setPathToEntity(new PathEntity(point));
-			// this.moveEntity(this.motionX, this.motionY, this.motionZ);
-			this.attackEntityAsMob(entitylivingbase);
-		}
-	}
-
-	@Override
 	public boolean attackEntityAsMob(Entity par1Entity) {
-		if (timer > 0) {
-			boolean flag = super.attackEntityAsMob(par1Entity);
+		boolean flag = super.attackEntityAsMob(par1Entity);
 
-			if (flag && this.getHeldItem() == null && this.isBurning() && this.rand.nextFloat() < (float) this.worldObj.difficultySetting * 0.3F) {
-				par1Entity.setFire(2 * this.worldObj.difficultySetting);
-			}
-
-			return flag;
-		} else {
-			this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 5, 10.0F));
-			this.attackEntityWithRangedAttack((EntityLivingBase) par1Entity, 1);
+		if (flag && this.getHeldItem() == null && this.isBurning() && this.rand.nextFloat() < (float) this.worldObj.difficultySetting * 0.3F) {
+			par1Entity.setFire(2 * this.worldObj.difficultySetting);
 		}
-		return false;
+
+		return flag;
 	}
 }

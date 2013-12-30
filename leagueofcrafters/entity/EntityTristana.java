@@ -29,6 +29,7 @@ public class EntityTristana extends EntityMob implements IRangedAttackMob {
 		this.tasks.addTask(2, new EntityAIWander(this, 1.0D));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityMinion.class, 0, true));
 	}
 
 	@Override

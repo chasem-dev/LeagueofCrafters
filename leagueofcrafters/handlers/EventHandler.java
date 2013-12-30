@@ -33,12 +33,13 @@ public class EventHandler {
 	@ForgeSubscribe
 	public void onLivingUpdateEvent(LivingDeathEvent event) {
 		if (event.entity instanceof EntityLizard) {
-			EntityPlayer player = (EntityPlayer) event.source.getEntity();
-			if (player != null)
-				// System.out.println("[Killed by] " +
-				// event.source.getEntity());
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 6000, 0));
-
+			if (event.source != null) {
+				EntityPlayer player = (EntityPlayer) event.source.getEntity();
+				if (player != null)
+					// System.out.println("[Killed by] " +
+					// event.source.getEntity());
+					player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 6000, 0));
+			}
 		}
 	}
 
